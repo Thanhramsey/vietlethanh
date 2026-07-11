@@ -27,8 +27,16 @@
                         <?php foreach ($images as $img): ?>
                             <tr>
                                 <td class="ps-4">
+                                    <?php
+                                    $galleryImagePath = !empty($img['image']) ? FCPATH . 'uploads/gallery/' . $img['image'] : '';
+                                    $galleryImageUrl = !empty($img['image']) ? base_url('uploads/gallery/' . $img['image']) : '';
+                                    ?>
                                     <div class="border rounded bg-light overflow-hidden d-flex align-items-center justify-content-center" style="width: 80px; height: 60px;">
-                                        <i class="bi bi-image text-muted"></i>
+                                        <?php if (!empty($galleryImagePath) && file_exists($galleryImagePath)): ?>
+                                            <img src="<?= $galleryImageUrl ?>" alt="<?= esc($img['title']) ?>" style="width:100%;height:100%;object-fit:cover;">
+                                        <?php else: ?>
+                                            <i class="bi bi-image text-muted"></i>
+                                        <?php endif; ?>
                                     </div>
                                 </td>
                                 <td class="fw-semibold"><?= esc($img['title']) ?></td>

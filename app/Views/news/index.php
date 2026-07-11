@@ -24,12 +24,30 @@
                 <div class="row g-4">
                     <?php if (!empty($newsList)): ?>
                         <?php foreach ($newsList as $news): ?>
+                            <?php
+                            $newsImageRaw = (string) ($news['image'] ?? '');
+                            $newsImagePath = '';
+                            $newsImageUrl = '';
+                            if ($newsImageRaw !== '') {
+                                if (strpos($newsImageRaw, 'uploads/') === 0) {
+                                    $newsImagePath = FCPATH . $newsImageRaw;
+                                    $newsImageUrl = base_url($newsImageRaw);
+                                } else {
+                                    $newsImagePath = FCPATH . 'uploads/news/' . $newsImageRaw;
+                                    $newsImageUrl = base_url('uploads/news/' . $newsImageRaw);
+                                }
+                            }
+                            ?>
                             <div class="col-md-6" data-aos="fade-up">
                                 <div class="news-card">
                                     <div class="news-img-wrapper">
-                                        <div class="w-100 h-100 bg-secondary text-white d-flex align-items-center justify-content-center" style="background: linear-gradient(135deg, #2b5876 0%, #4e4376 100%);">
-                                            <i class="bi bi-newspaper fs-1"></i>
-                                        </div>
+                                        <?php if (!empty($newsImagePath) && file_exists($newsImagePath)): ?>
+                                            <img src="<?= $newsImageUrl ?>" alt="<?= esc($news['title']) ?>" style="width:100%;height:100%;object-fit:cover;">
+                                        <?php else: ?>
+                                            <div class="w-100 h-100 bg-secondary text-white d-flex align-items-center justify-content-center" style="background: linear-gradient(135deg, #2b5876 0%, #4e4376 100%);">
+                                                <i class="bi bi-newspaper fs-1"></i>
+                                            </div>
+                                        <?php endif; ?>
                                     </div>
                                     <div class="news-body">
                                         <div class="news-meta">

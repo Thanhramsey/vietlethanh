@@ -26,8 +26,16 @@
                         <?php foreach ($banners as $banner): ?>
                             <tr>
                                 <td class="ps-4">
+                                    <?php
+                                    $bannerImagePath = !empty($banner['desktop_image']) ? FCPATH . 'uploads/banners/' . $banner['desktop_image'] : '';
+                                    $bannerImageUrl = !empty($banner['desktop_image']) ? base_url('uploads/banners/' . $banner['desktop_image']) : '';
+                                    ?>
                                     <div class="border rounded bg-light overflow-hidden d-flex align-items-center justify-content-center" style="width: 120px; height: 60px;">
-                                        <i class="bi bi-image text-muted"></i>
+                                        <?php if (!empty($bannerImagePath) && file_exists($bannerImagePath)): ?>
+                                            <img src="<?= $bannerImageUrl ?>" alt="<?= esc($banner['title'] ?: 'Banner') ?>" style="width:100%;height:100%;object-fit:cover;">
+                                        <?php else: ?>
+                                            <i class="bi bi-image text-muted"></i>
+                                        <?php endif; ?>
                                     </div>
                                 </td>
                                 <td>

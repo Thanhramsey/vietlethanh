@@ -33,12 +33,19 @@
         <div class="row g-4" id="gallery-grid">
             <?php if (!empty($images)): ?>
                 <?php foreach ($images as $item): ?>
+                    <?php
+                    $galleryImagePath = !empty($item['image']) ? FCPATH . 'uploads/gallery/' . $item['image'] : '';
+                    $galleryImageUrl = !empty($item['image']) ? base_url('uploads/gallery/' . $item['image']) : '';
+                    ?>
                     <div class="col-lg-4 col-md-6 gallery-card" data-category="<?= esc($item['album']) ?>" data-aos="zoom-in">
                         <div class="gallery-item">
-                            <!-- Standard database image loader -->
                             <div class="w-100 h-100 bg-dark d-flex align-items-center justify-content-center text-white text-center position-relative">
-                                <span class="p-3"><?= esc($item['title']) ?></span>
-                                <a href="<?= base_url('uploads/gallery/' . esc($item['image'])) ?>" data-fancybox="gallery" data-caption="<?= esc($item['title']) ?>" class="gallery-overlay">
+                                <?php if (!empty($galleryImagePath) && file_exists($galleryImagePath)): ?>
+                                    <img src="<?= $galleryImageUrl ?>" alt="<?= esc($item['title']) ?>" style="width:100%;height:100%;object-fit:cover;">
+                                <?php else: ?>
+                                    <span class="p-3"><?= esc($item['title']) ?></span>
+                                <?php endif; ?>
+                                <a href="<?= !empty($galleryImageUrl) ? $galleryImageUrl : '#' ?>" data-fancybox="gallery" data-caption="<?= esc($item['title']) ?>" class="gallery-overlay">
                                     <i class="bi bi-plus-circle gallery-icon"></i>
                                     <span>Xem Ảnh Lớn</span>
                                 </a>

@@ -288,14 +288,22 @@ $homeSectionOrders = [
         <div class="row g-4">
             <?php if (!empty($gallery)): ?>
                 <?php foreach ($gallery as $item): ?>
+                    <?php
+                    $homeGalleryImagePath = !empty($item['image']) ? FCPATH . 'uploads/gallery/' . $item['image'] : '';
+                    $homeGalleryImageUrl = !empty($item['image']) ? base_url('uploads/gallery/' . $item['image']) : '';
+                    ?>
                     <div class="col-lg-4 col-md-6" data-aos="zoom-in">
                         <div class="gallery-item">
-                            <!-- In a production app, the image would load from uploads/gallery/ -->
                             <div class="w-100 h-100 bg-dark d-flex align-items-center justify-content-center text-white text-center position-relative">
-                                <span class="p-3"><?= esc($item['title']) ?></span>
-                                <a href="<?= base_url('uploads/gallery/' . esc($item['image'])) ?>" data-fancybox="gallery" data-caption="<?= esc($item['title']) ?>" class="gallery-overlay">
+                                <?php if (!empty($homeGalleryImagePath) && file_exists($homeGalleryImagePath)): ?>
+                                    <img src="<?= $homeGalleryImageUrl ?>" alt="<?= esc($item['title']) ?>" style="width:100%;height:100%;object-fit:cover;">
+                                <?php else: ?>
+                                    <span class="p-3"><?= esc($item['title']) ?></span>
+                                <?php endif; ?>
+                                <a href="<?= !empty($homeGalleryImageUrl) ? $homeGalleryImageUrl : '#' ?>" data-fancybox="gallery" data-caption="<?= esc($item['title']) ?>" class="gallery-overlay">
                                     <i class="bi bi-plus-circle gallery-icon"></i>
-                                    <span><?= esc($homeGalleryViewAllText) ?></span>
+                                    <span class="fw-semibold"><?= esc($item['title']) ?></span>
+                                    <small class="mt-1">Xem ảnh lớn</small>
                                 </a>
                             </div>
                         </div>
@@ -324,13 +332,30 @@ $homeSectionOrders = [
         <div class="row g-4">
             <?php if (!empty($news)): ?>
                 <?php foreach ($news as $item): ?>
+                    <?php
+                    $homeNewsImageRaw = (string) ($item['image'] ?? '');
+                    $homeNewsImagePath = '';
+                    $homeNewsImageUrl = '';
+                    if ($homeNewsImageRaw !== '') {
+                        if (strpos($homeNewsImageRaw, 'uploads/') === 0) {
+                            $homeNewsImagePath = FCPATH . $homeNewsImageRaw;
+                            $homeNewsImageUrl = base_url($homeNewsImageRaw);
+                        } else {
+                            $homeNewsImagePath = FCPATH . 'uploads/news/' . $homeNewsImageRaw;
+                            $homeNewsImageUrl = base_url('uploads/news/' . $homeNewsImageRaw);
+                        }
+                    }
+                    ?>
                     <div class="col-lg-4 col-md-6" data-aos="fade-up">
                         <div class="news-card">
                             <div class="news-img-wrapper">
-                                <!-- Mock layout if image is missing -->
-                                <div class="w-100 h-100 bg-secondary text-white d-flex align-items-center justify-content-center" style="background: linear-gradient(135deg, #2b5876 0%, #4e4376 100%);">
-                                    <i class="bi bi-newspaper fs-1"></i>
-                                </div>
+                                <?php if (!empty($homeNewsImagePath) && file_exists($homeNewsImagePath)): ?>
+                                    <img src="<?= $homeNewsImageUrl ?>" alt="<?= esc($item['title']) ?>" style="width:100%;height:100%;object-fit:cover;">
+                                <?php else: ?>
+                                    <div class="w-100 h-100 bg-secondary text-white d-flex align-items-center justify-content-center" style="background: linear-gradient(135deg, #2b5876 0%, #4e4376 100%);">
+                                        <i class="bi bi-newspaper fs-1"></i>
+                                    </div>
+                                <?php endif; ?>
                             </div>
                             <div class="news-body">
                                 <div class="news-meta">

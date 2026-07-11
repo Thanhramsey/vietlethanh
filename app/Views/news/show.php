@@ -2,6 +2,21 @@
 
 <?= $this->section('content') ?>
 
+<?php
+$mainNewsImageRaw = (string) ($news['image'] ?? '');
+$mainNewsImagePath = '';
+$mainNewsImageUrl = '';
+if ($mainNewsImageRaw !== '') {
+    if (strpos($mainNewsImageRaw, 'uploads/') === 0) {
+        $mainNewsImagePath = FCPATH . $mainNewsImageRaw;
+        $mainNewsImageUrl = base_url($mainNewsImageRaw);
+    } else {
+        $mainNewsImagePath = FCPATH . 'uploads/news/' . $mainNewsImageRaw;
+        $mainNewsImageUrl = base_url('uploads/news/' . $mainNewsImageRaw);
+    }
+}
+?>
+
 <!-- Page Header / Breadcrumbs -->
 <div class="page-header">
     <div class="container" data-aos="fade-down">
@@ -24,10 +39,14 @@
             <div class="col-lg-8" data-aos="fade-right">
                 <article class="news-detail-content">
                     <div class="mb-4 bg-secondary text-white d-flex align-items-center justify-content-center rounded-4 shadow-sm" style="height: 350px; background: linear-gradient(135deg, #2b5876 0%, #4e4376 100%);">
-                        <div class="text-center p-4">
-                            <i class="bi bi-newspaper display-1 mb-3 text-white-50"></i>
-                            <h2 class="fw-bold"><?= esc($news['title']) ?></h2>
-                        </div>
+                        <?php if (!empty($mainNewsImagePath) && file_exists($mainNewsImagePath)): ?>
+                            <img src="<?= $mainNewsImageUrl ?>" alt="<?= esc($news['title']) ?>" style="width:100%;height:100%;object-fit:cover;">
+                        <?php else: ?>
+                            <div class="text-center p-4">
+                                <i class="bi bi-newspaper display-1 mb-3 text-white-50"></i>
+                                <h2 class="fw-bold\><?= esc($news['title']) ?></h2>
+                            </div>
+                        <?php endif; ?>
                     </div>
                     
                     <div class="d-flex align-items-center gap-3 text-muted small mb-3">
@@ -69,9 +88,27 @@
                     <div class="d-flex flex-column gap-3">
                         <?php if (!empty($relatedNews)): ?>
                             <?php foreach ($relatedNews as $related): ?>
+                                <?php
+                                $relatedImageRaw = (string) ($related['image'] ?? '');
+                                $relatedImagePath = '';
+                                $relatedImageUrl = '';
+                                if ($relatedImageRaw !== '') {
+                                    if (strpos($relatedImageRaw, 'uploads/') === 0) {
+                                        $relatedImagePath = FCPATH . $relatedImageRaw;
+                                        $relatedImageUrl = base_url($relatedImageRaw);
+                                    } else {
+                                        $relatedImagePath = FCPATH . 'uploads/news/' . $relatedImageRaw;
+                                        $relatedImageUrl = base_url('uploads/news/' . $relatedImageRaw);
+                                    }
+                                }
+                                ?>
                                 <div class="d-flex gap-3 align-items-start border-bottom pb-3">
                                     <div class="bg-secondary rounded text-white d-flex align-items-center justify-content-center" style="width: 70px; height: 70px; min-width: 70px; background: linear-gradient(135deg, #2b5876 0%, #4e4376 100%);">
-                                        <i class="bi bi-newspaper text-white-50"></i>
+                                        <?php if (!empty($relatedImagePath) && file_exists($relatedImagePath)): ?>
+                                            <img src="<?= $relatedImageUrl ?>" alt="<?= esc($related['title']) ?>" style="width:100%;height:100%;object-fit:cover;">
+                                        <?php else: ?>
+                                            <i class="bi bi-newspaper text-white-50"></i>
+                                        <?php endif; ?>
                                     </div>
                                     <div>
                                         <h6 class="mb-1 fw-bold" style="font-size: 0.9rem; line-height: 1.3;">

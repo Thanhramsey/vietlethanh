@@ -13,6 +13,7 @@
             <table class="table table-hover align-middle mb-0">
                 <thead class="table-light">
                     <tr>
+                        <th class="ps-4" style="width: 100px;">Ảnh</th>
                         <th class="ps-4">Tiêu đề</th>
                         <th>Danh mục</th>
                         <th>Trạng thái</th>
@@ -25,6 +26,29 @@
                     <?php if (!empty($newsList)): ?>
                         <?php foreach ($newsList as $news): ?>
                             <tr>
+                                <td class="ps-4">
+                                    <?php
+                                    $newsImageRaw = (string) ($news['image'] ?? '');
+                                    $newsImagePath = '';
+                                    $newsImageUrl = '';
+                                    if ($newsImageRaw !== '') {
+                                        if (strpos($newsImageRaw, 'uploads/') === 0) {
+                                            $newsImagePath = FCPATH . $newsImageRaw;
+                                            $newsImageUrl = base_url($newsImageRaw);
+                                        } else {
+                                            $newsImagePath = FCPATH . 'uploads/news/' . $newsImageRaw;
+                                            $newsImageUrl = base_url('uploads/news/' . $newsImageRaw);
+                                        }
+                                    }
+                                    ?>
+                                    <div class="border rounded bg-light overflow-hidden d-flex align-items-center justify-content-center" style="width: 70px; height: 52px;">
+                                        <?php if (!empty($newsImagePath) && file_exists($newsImagePath)): ?>
+                                            <img src="<?= $newsImageUrl ?>" alt="<?= esc($news['title']) ?>" style="width:100%;height:100%;object-fit:cover;">
+                                        <?php else: ?>
+                                            <i class="bi bi-image text-muted"></i>
+                                        <?php endif; ?>
+                                    </div>
+                                </td>
                                 <td class="ps-4 fw-semibold text-wrap" style="max-width: 300px;"><?= esc($news['title']) ?></td>
                                 <td><?= esc($news['category_title'] ?? 'Chưa phân loại') ?></td>
                                 <td>
@@ -52,7 +76,7 @@
                         <?php endforeach; ?>
                     <?php else: ?>
                         <tr>
-                            <td colspan="6" class="text-center py-4 text-muted">Chưa có bài viết nào được tạo.</td>
+                            <td colspan="7" class="text-center py-4 text-muted">Chưa có bài viết nào được tạo.</td>
                         </tr>
                     <?php endif; ?>
                 </tbody>
