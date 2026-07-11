@@ -809,6 +809,43 @@ a.text-primary:hover {
     padding: 30px;
 }
 
+.admin-content .admin-pagination-nav .pagination {
+    gap: 6px;
+}
+
+.admin-content .admin-pagination-nav .page-item .page-link {
+    min-width: 36px;
+    height: 36px;
+    border: 1px solid rgba(var(--primary-rgb), 0.2);
+    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    color: var(--primary-color) !important;
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(16, 24, 40, 0.05);
+    transition: var(--transition-fast);
+}
+
+.admin-content .admin-pagination-nav .page-item .page-link:hover {
+    border-color: var(--primary-color);
+    background-color: rgba(var(--primary-rgb), 0.08);
+    transform: translateY(-1px);
+}
+
+.admin-content .admin-pagination-nav .page-item.active .page-link {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    border-color: transparent;
+    color: #fff !important;
+    box-shadow: 0 10px 18px rgba(var(--primary-rgb), 0.28);
+}
+
+.admin-content .admin-pagination-nav .page-item.disabled .page-link {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
 /* Animations */
 @keyframes fadeInUp {
     from {

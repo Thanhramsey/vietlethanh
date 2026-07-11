@@ -18,11 +18,29 @@ class News extends AdminBaseController
 
     public function index(): string
     {
-        $newsList = $this->newsModel->getNewsWithCategory();
+        $perPage = 10;
+        $keyword = trim((string) $this->request->getGet('q'));
+
+        $builder = $this->newsModel
+            ->select('news.*, news_categories.title as category_title')
+            ->join('news_categories', 'news_categories.id = news.category_id', 'left')
+            ->orderBy('news.id', 'DESC');
+
+        if ($keyword !== '') {
+            $builder->groupStart()
+                ->like('news.title', $keyword)
+                ->orLike('news.summary', $keyword)
+                ->orLike('news.tags', $keyword)
+                ->groupEnd();
+        }
+
+        $newsList = $builder->paginate($perPage);
 
         $data = [
             'title'    => 'Quản lý tin tức',
-            'newsList' => $newsList
+            'newsList' => $newsList,
+            'pager'    => $this->newsModel->pager,
+            'keyword'  => $keyword,
         ];
 
         return view('admin/news/index', $data);

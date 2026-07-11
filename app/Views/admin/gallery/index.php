@@ -70,6 +70,12 @@
                 </tbody>
             </table>
         </div>
+
+        <?php if (!empty($pager)): ?>
+            <div class="mt-4 d-flex justify-content-end">
+                <?= $pager->links('default', 'admin_full') ?>
+            </div>
+        <?php endif; ?>
     </div>
 </div>
 

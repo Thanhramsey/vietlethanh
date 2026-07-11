@@ -9,6 +9,20 @@
     </div>
     
     <div class="card-body p-4">
+        <form action="<?= base_url('admin/news') ?>" method="get" class="row g-2 mb-3">
+            <div class="col-md-6 col-lg-5">
+                <input type="text" class="form-control" name="q" value="<?= esc($keyword ?? '') ?>" placeholder="Tìm theo tiêu đề, tóm tắt, tag...">
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-outline-primary rounded-pill px-3"><i class="bi bi-search me-1"></i>Tìm</button>
+            </div>
+            <?php if (!empty($keyword)): ?>
+                <div class="col-auto">
+                    <a href="<?= base_url('admin/news') ?>" class="btn btn-outline-secondary rounded-pill px-3">Xóa lọc</a>
+                </div>
+            <?php endif; ?>
+        </form>
+
         <div class="table-responsive">
             <table class="table table-hover align-middle mb-0">
                 <thead class="table-light">
@@ -76,12 +90,18 @@
                         <?php endforeach; ?>
                     <?php else: ?>
                         <tr>
-                            <td colspan="7" class="text-center py-4 text-muted">Chưa có bài viết nào được tạo.</td>
+                            <td colspan="7" class="text-center py-4 text-muted"><?= !empty($keyword) ? 'Không tìm thấy bài viết phù hợp.' : 'Chưa có bài viết nào được tạo.' ?></td>
                         </tr>
                     <?php endif; ?>
                 </tbody>
             </table>
         </div>
+
+        <?php if (!empty($pager)): ?>
+            <div class="mt-4 d-flex justify-content-end">
+                <?= ($pager->only(['q']))->links('default', 'admin_full') ?>
+            </div>
+        <?php endif; ?>
     </div>
 </div>
 

@@ -16,15 +16,19 @@ class Gallery extends AdminBaseController
 
     public function index(): string
     {
+        $perPage = 10;
+
         // Join with gallery_albums
         $images = $this->galleryModel->select('gallery.*, gallery_albums.title as album_title')
                                      ->join('gallery_albums', 'gallery_albums.id = gallery.album_id', 'left')
                                      ->orderBy('gallery.sort_order', 'ASC')
-                                     ->findAll();
+                                     ->orderBy('gallery.id', 'DESC')
+                                     ->paginate($perPage);
 
         $data = [
             'title'  => 'Quản lý Thư viện ảnh',
-            'images' => $images
+            'images' => $images,
+            'pager'  => $this->galleryModel->pager,
         ];
 
         return view('admin/gallery/index', $data);
