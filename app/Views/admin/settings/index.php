@@ -717,6 +717,89 @@ document.addEventListener('DOMContentLoaded', function () {
     buildEnglishFields('home-content-form', 'home_');
     buildEnglishFields('about-content-form', 'about_');
 
+    function enableSectionCollapse(formId) {
+        const form = document.getElementById(formId);
+        if (!form) return;
+
+        const cards = Array.from(form.querySelectorAll(':scope > .card'));
+        if (!cards.length) return;
+
+        const collapseTargets = [];
+
+        cards.forEach((card, index) => {
+            const header = card.querySelector(':scope > .card-header');
+            const body = card.querySelector(':scope > .card-body');
+            if (!header || !body) return;
+
+            // Skip cards already using custom collapse markup.
+            if (header.querySelector('[data-bs-toggle="collapse"]')) return;
+
+            const collapseId = formId + '-section-' + index;
+            body.id = collapseId;
+            body.classList.add('collapse');
+
+            header.classList.add('d-flex', 'justify-content-between', 'align-items-center');
+
+            const toggleBtn = document.createElement('button');
+            toggleBtn.type = 'button';
+            toggleBtn.className = 'btn btn-sm btn-outline-secondary rounded-pill px-3';
+            toggleBtn.setAttribute('data-bs-toggle', 'collapse');
+            toggleBtn.setAttribute('data-bs-target', '#' + collapseId);
+            toggleBtn.setAttribute('aria-expanded', 'false');
+            toggleBtn.setAttribute('aria-controls', collapseId);
+            toggleBtn.innerHTML = '<i class="bi bi-chevron-down me-1"></i>Mở rộng';
+
+            body.addEventListener('shown.bs.collapse', function () {
+                toggleBtn.innerHTML = '<i class="bi bi-chevron-up me-1"></i>Thu gọn';
+                toggleBtn.setAttribute('aria-expanded', 'true');
+            });
+
+            body.addEventListener('hidden.bs.collapse', function () {
+                toggleBtn.innerHTML = '<i class="bi bi-chevron-down me-1"></i>Mở rộng';
+                toggleBtn.setAttribute('aria-expanded', 'false');
+            });
+
+            header.appendChild(toggleBtn);
+            collapseTargets.push(body);
+        });
+
+        if (!collapseTargets.length) return;
+
+        const controls = document.createElement('div');
+        controls.className = 'd-flex justify-content-end gap-2 mb-3';
+        controls.innerHTML = [
+            '<button type="button" class="btn btn-sm btn-outline-secondary rounded-pill px-3" data-collapse-all="' + formId + '"><i class="bi bi-dash-square me-1"></i>Thu gọn tất cả</button>',
+            '<button type="button" class="btn btn-sm btn-outline-primary rounded-pill px-3" data-expand-all="' + formId + '"><i class="bi bi-plus-square me-1"></i>Mở tất cả</button>'
+        ].join('');
+
+        const firstCard = cards[0];
+        if (firstCard) {
+            form.insertBefore(controls, firstCard);
+        }
+
+        const collapseAllBtn = controls.querySelector('[data-collapse-all="' + formId + '"]');
+        const expandAllBtn = controls.querySelector('[data-expand-all="' + formId + '"]');
+
+        if (collapseAllBtn) {
+            collapseAllBtn.addEventListener('click', function () {
+                collapseTargets.forEach((target) => {
+                    bootstrap.Collapse.getOrCreateInstance(target, { toggle: false }).hide();
+                });
+            });
+        }
+
+        if (expandAllBtn) {
+            expandAllBtn.addEventListener('click', function () {
+                collapseTargets.forEach((target) => {
+                    bootstrap.Collapse.getOrCreateInstance(target, { toggle: false }).show();
+                });
+            });
+        }
+    }
+
+    enableSectionCollapse('home-content-form');
+    enableSectionCollapse('about-content-form');
+
     const settingsButtons = document.querySelectorAll('#settingsTab .nav-link');
     settingsButtons.forEach((button) => {
         button.addEventListener('shown.bs.tab', function (event) {

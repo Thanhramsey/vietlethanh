@@ -109,6 +109,12 @@
         $colorKey = 'ocean_blue';
     }
     $themeColors = $colorPresets[$colorKey];
+
+    $siteLogoFile = (string) get_setting('site_logo', '');
+    $faviconUrl = base_url('favicon.ico');
+    if ($siteLogoFile !== '' && file_exists(FCPATH . 'uploads/settings/' . $siteLogoFile)) {
+        $faviconUrl = base_url('uploads/settings/' . $siteLogoFile);
+    }
     ?>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -118,6 +124,9 @@
     <meta name="description" content="<?= esc($seo_description ?? get_setting('seo_description')) ?>">
     <meta name="keywords" content="<?= esc($seo_keywords ?? get_setting('seo_keywords')) ?>">
     <link rel="canonical" href="<?= esc($canonical_url ?? current_url()) ?>">
+    <link rel="icon" href="<?= esc($faviconUrl) ?>" type="image/x-icon">
+    <link rel="shortcut icon" href="<?= esc($faviconUrl) ?>" type="image/x-icon">
+    <link rel="apple-touch-icon" href="<?= esc($faviconUrl) ?>">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
