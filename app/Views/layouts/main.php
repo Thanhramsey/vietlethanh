@@ -116,6 +116,12 @@
         $faviconUrl = base_url('uploads/settings/' . $siteLogoFile);
     }
     ?>
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('site_theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        })();
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
@@ -181,6 +187,117 @@
             --bs-btn-hover-border-color: <?= esc($themeColors['dark']) ?>;
             --bs-btn-active-bg: <?= esc($themeColors['dark']) ?>;
             --bs-btn-active-border-color: <?= esc($themeColors['dark']) ?>;
+
+            /* Theme mode variables */
+            --bg-body: #ffffff;
+            --bg-card: #ffffff;
+            --bg-navbar: #ffffff;
+            --border-color: #e9ecef;
+            --text-main: <?= esc($themeColors['text']) ?>;
+            --text-muted-custom: <?= esc($themeColors['muted']) ?>;
+        }
+
+        [data-theme="dark"] {
+            --bg-body: #0b1329;
+            --bg-card: #111b35;
+            --bg-navbar: #0b1329;
+            --border-color: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted-custom: #94a3b8;
+            --bg-light: #111b35;
+
+            /* Override primary light and text */
+            --primary-light: #111b35;
+            --text-color: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+        
+        /* Apply dynamic theme variables globally */
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+        }
+        .bg-white {
+            background-color: var(--bg-card) !important;
+        }
+        .bg-light-gray, .bg-light {
+            background-color: var(--bg-light) !important;
+        }
+        .card {
+            background-color: var(--bg-card) !important;
+            border-color: var(--border-color) !important;
+        }
+        .text-dark {
+            color: var(--text-main) !important;
+        }
+        .text-muted {
+            color: var(--text-muted-custom) !important;
+        }
+        .border, .border-bottom, .border-top, .border-start, .border-end {
+            border-color: var(--border-color) !important;
+        }
+        hr {
+            border-color: var(--border-color);
+            opacity: 0.15;
+        }
+        
+        /* Dark theme deep overrides */
+        [data-theme="dark"] h1, 
+        [data-theme="dark"] h2, 
+        [data-theme="dark"] h3, 
+        [data-theme="dark"] h4, 
+        [data-theme="dark"] h5, 
+        [data-theme="dark"] h6 {
+            color: #ffffff !important;
+        }
+        [data-theme="dark"] label {
+            color: var(--text-main) !important;
+        }
+        [data-theme="dark"] .form-control {
+            background-color: var(--bg-light) !important;
+            border-color: var(--border-color) !important;
+            color: var(--text-main) !important;
+        }
+        [data-theme="dark"] .form-control::placeholder {
+            color: var(--text-muted-custom) !important;
+            opacity: 0.7;
+        }
+        [data-theme="dark"] .sector-link {
+            color: var(--primary-color) !important;
+        }
+        [data-theme="dark"] .section-eyebrow {
+            background-color: rgba(59, 130, 246, 0.15) !important;
+            color: var(--primary-color) !important;
+        }
+        [data-theme="dark"] .vmv-number {
+            color: rgba(255, 255, 255, 0.08) !important;
+        }
+        [data-theme="dark"] .about-stats-strip {
+            background-color: var(--bg-card) !important;
+            border-bottom: 1px solid var(--border-color);
+        }
+        [data-theme="dark"] .about-stats-strip .stat-number {
+            color: var(--primary-color) !important;
+        }
+        [data-theme="dark"] .about-stats-strip .stat-label {
+            color: var(--text-muted-custom) !important;
+        }
+        [data-theme="dark"] .timeline-slides-container {
+            background-color: var(--bg-card) !important;
+            border: 1px solid var(--border-color) !important;
+        }
+        [data-theme="dark"] .timeline-slide-img-fallback {
+            background-color: var(--bg-light) !important;
+        }
+        [data-theme="dark"] .timeline-year-dot {
+            background-color: var(--bg-body) !important;
+            border-color: var(--border-color) !important;
+            box-shadow: 0 0 0 4px var(--bg-body) !important;
+        }
+        [data-theme="dark"] .timeline-year-btn.active .timeline-year-dot {
+            background-color: var(--primary-color) !important;
+            border-color: var(--primary-color) !important;
+            box-shadow: 0 0 0 6px var(--bg-body) !important;
         }
     </style>
 </head>
@@ -405,6 +522,35 @@
             btn.addEventListener('click', function() {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             });
+        })();
+
+        // Theme Switcher Logic
+        (function() {
+            var themeBtn = document.getElementById('theme-toggle-btn');
+            if (!themeBtn) return;
+            var icon = document.getElementById('theme-toggle-icon');
+
+            function updateTheme(theme) {
+                document.documentElement.setAttribute('data-theme', theme);
+                localStorage.setItem('site_theme', theme);
+                if (theme === 'dark') {
+                    icon.classList.replace('bi-moon-fill', 'bi-sun-fill');
+                } else {
+                    icon.classList.replace('bi-sun-fill', 'bi-moon-fill');
+                }
+            }
+
+            themeBtn.addEventListener('click', function() {
+                var currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+                var nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                updateTheme(nextTheme);
+            });
+
+            // Sync icon on startup
+            var currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+            if (currentTheme === 'dark') {
+                icon.classList.replace('bi-moon-fill', 'bi-sun-fill');
+            }
         })();
     </script>
 

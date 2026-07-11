@@ -41,21 +41,18 @@
                                         <?php if (!empty($doc['issue_date'])): ?><div><i class="bi bi-calendar3 me-1"></i><?= date('d/m/Y', strtotime($doc['issue_date'])) ?></div><?php endif; ?>
                                     </div>
                                 <?php endif; ?>
-                                            <span class="badge bg-primary-subtle text-primary mb-2"><?= esc($doc['category_title'] ?? lang('Site.documents')) ?></span>
                                 <?php if (!empty($fileUrl)): ?>
-                                    <a href="<?= $fileUrl ?>" target="_blank" class="btn btn-outline-primary btn-sm rounded-pill">Mở giấy tờ <i class="bi bi-box-arrow-up-right ms-1"></i></a>
+                                    <a href="<?= $fileUrl ?>" target="_blank" class="btn btn-outline-primary btn-sm rounded-pill"><?= esc(lang('Site.open_document')) ?> <i class="bi bi-box-arrow-up-right ms-1"></i></a>
                                 <?php endif; ?>
                             </div>
                         </div>
                     </div>
                 <?php endforeach; ?>
             <?php else: ?>
-                <div class="col-12 text-center text-muted py-5">Chưa có giấy tờ phù hợp với bộ lọc.</div>
-                                                <a href="<?= $fileUrl ?>" target="_blank" class="btn btn-outline-primary btn-sm rounded-pill"><?= esc(lang('Site.open_document')) ?> <i class="bi bi-box-arrow-up-right ms-1"></i></a>
+                <div class="col-12 text-center text-muted py-5"><?= esc(lang('Site.no_matching_documents')) ?></div>
+            <?php endif; ?>
         </div>
     </div>
 </section>
 
 <?= $this->endSection() ?>
-
-                            <div class="col-12 text-center text-muted py-5"><?= esc(lang('Site.no_matching_documents')) ?></div>
