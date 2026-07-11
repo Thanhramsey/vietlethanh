@@ -25,7 +25,7 @@
                         <div class="service-card">
                             <div class="service-img-wrapper">
                                 <!-- Mock image display using styled div -->
-                                <div class="w-100 h-100 bg-primary d-flex align-items-center justify-content-center text-white" style="background: linear-gradient(135deg, rgba(11,94,215,0.8), rgba(10,54,157,0.9));">
+                                <div class="w-100 h-100 bg-primary d-flex align-items-center justify-content-center text-white" style="background: linear-gradient(135deg, rgba(var(--primary-rgb),0.85), rgba(var(--primary-dark-rgb),0.92));">
                                     <i class="bi <?= esc($service['icon']) ?> fs-1"></i>
                                 </div>
                                 <div class="service-icon-badge">

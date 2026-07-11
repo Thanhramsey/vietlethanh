@@ -58,7 +58,7 @@ if ($mainNewsImageRaw !== '') {
                     
                     <!-- Content printed as HTML -->
                     <div class="content-body mt-4">
-                        <?= $news['content'] ?>
+                        <?= $newsContentHtml ?? ($news['content'] ?? '') ?>
                     </div>
                     
                     <?php if (!empty($news['tags'])): ?>

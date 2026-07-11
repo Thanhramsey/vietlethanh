@@ -57,6 +57,7 @@ class News extends BaseController
 
         $data = [
             'news'            => $news,
+            'newsContentHtml' => $this->convertDocumentLinksToGoogleViewer((string) ($news['content'] ?? '')),
             'category'        => $category,
             'relatedNews'     => $relatedNews,
             'seo_title'       => $news['seo_title'] ?? $news['title'],
@@ -91,5 +92,47 @@ class News extends BaseController
         ];
 
         return view('news/index', $data);
+    }
+
+    private function convertDocumentLinksToGoogleViewer(string $html): string
+    {
+        if ($html === '') {
+            return $html;
+        }
+
+        return (string) preg_replace_callback(
+            '/<a\\b([^>]*?)href=(["\'])([^"\']+)\\2([^>]*)>/i',
+            function (array $matches): string {
+                $before = $matches[1] ?? '';
+                $quote = $matches[2] ?? '"';
+                $href = $matches[3] ?? '';
+                $after = $matches[4] ?? '';
+
+                if ($href === '') {
+                    return $matches[0];
+                }
+
+                if (str_contains($href, 'docs.google.com/gview')) {
+                    return $matches[0];
+                }
+
+                $path = parse_url($href, PHP_URL_PATH) ?? '';
+                $ext = strtolower(pathinfo($path, PATHINFO_EXTENSION));
+                $viewerExts = ['pdf', 'doc', 'docx'];
+                if (!in_array($ext, $viewerExts, true)) {
+                    return $matches[0];
+                }
+
+                $isAbsolute = preg_match('#^https?://#i', $href) === 1;
+                $publicUrl = $isAbsolute ? $href : base_url(ltrim($href, '/'));
+                $viewerUrl = 'https://docs.google.com/gview?embedded=1&url=' . rawurlencode($publicUrl);
+
+                $hasTarget = preg_match('/\\btarget\\s*=\\s*(["\']).*?\\1/i', $before . ' ' . $after) === 1;
+                $targetAttr = $hasTarget ? '' : ' target="_blank" rel="noopener"';
+
+                return '<a' . $before . 'href=' . $quote . $viewerUrl . $quote . $after . $targetAttr . '>';
+            },
+            $html
+        );
     }
 }

@@ -137,12 +137,6 @@ class Document extends AdminBaseController
     {
         $document = $this->documentModel->find($id);
         if ($document) {
-            $oldFiles = [$document['image'] ?? null, $document['file_attachment'] ?? null, $document['pdf_attachment'] ?? null];
-            foreach ($oldFiles as $oldFile) {
-                if (!empty($oldFile) && file_exists(FCPATH . 'uploads/documents/' . $oldFile)) {
-                    @unlink(FCPATH . 'uploads/documents/' . $oldFile);
-                }
-            }
             $this->documentModel->delete($id);
         }
 

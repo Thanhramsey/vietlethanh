@@ -67,6 +67,19 @@ $homeSectionOrders = [
     'home-partners'     => (int) get_setting('home_section_order_partners', '60'),
     'home-certificates' => (int) get_setting('home_section_order_certificates', '70'),
 ];
+
+$extractYouTubeId = static function (string $url): ?string {
+    $url = trim($url);
+    if ($url === '') {
+        return null;
+    }
+
+    if (preg_match('~(?:youtube\.com/(?:watch\?v=|embed/|shorts/)|youtu\.be/)([A-Za-z0-9_-]{11})~i', $url, $m)) {
+        return $m[1] ?? null;
+    }
+
+    return null;
+};
 ?>
 
 <!-- Hero Slider Section (Swiper) -->
@@ -95,7 +108,7 @@ $homeSectionOrders = [
             <?php endforeach; ?>
         <?php else: ?>
             <!-- Fallback Mock Banner -->
-            <div class="swiper-slide hero-slide-item" style="background: linear-gradient(135deg, #0f2044 0%, #1e3c72 45%, #2a5298 100%);">
+            <div class="swiper-slide hero-slide-item" style="background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 100%);">
                 <div class="hero-slide-overlay"></div>
                 <!-- decorative circles -->
                 <div style="position:absolute;width:500px;height:500px;border-radius:50%;border:1px solid rgba(255,255,255,0.06);top:-100px;right:-80px;z-index:1;"></div>
@@ -253,7 +266,7 @@ $homeSectionOrders = [
                         <div class="service-card">
                             <div class="service-img-wrapper">
                                 <!-- Placeholders for demo, using stylized divs if file missing -->
-                                <div class="w-100 h-100 bg-primary d-flex align-items-center justify-content-center text-white" style="background: linear-gradient(135deg, rgba(11,94,215,0.8), rgba(10,54,157,0.9));">
+                                <div class="w-100 h-100 bg-primary d-flex align-items-center justify-content-center text-white" style="background: linear-gradient(135deg, rgba(var(--primary-rgb),0.85), rgba(var(--primary-dark-rgb),0.92));">
                                     <i class="bi <?= esc($service['icon']) ?> fs-1"></i>
                                 </div>
                                 <div class="service-icon-badge">
@@ -278,7 +291,7 @@ $homeSectionOrders = [
 </section>
 
 <!-- Gallery Section -->
-<section class="section-padding bg-light-gray home-sortable-section" id="gallery" data-home-section="home-gallery" data-home-order="<?= $homeSectionOrders['home-gallery'] ?>">
+<section class="section-padding home-sortable-section" id="gallery" data-home-section="home-gallery" data-home-order="<?= $homeSectionOrders['home-gallery'] ?>">
     <div class="container">
         <div class="section-title-wrapper text-center">
             <span class="text-primary fw-bold text-uppercase d-block mb-2"><?= esc($homeGalleryEyebrow) ?></span>
@@ -291,19 +304,30 @@ $homeSectionOrders = [
                     <?php
                     $homeGalleryImagePath = !empty($item['image']) ? FCPATH . 'uploads/gallery/' . $item['image'] : '';
                     $homeGalleryImageUrl = !empty($item['image']) ? base_url('uploads/gallery/' . $item['image']) : '';
+                    $homeGalleryVideoUrl = trim((string) ($item['video'] ?? ''));
+                    $homeGalleryYouTubeId = $extractYouTubeId($homeGalleryVideoUrl);
+                    $isHomeGalleryVideo = !empty($homeGalleryYouTubeId);
+                    $homeGalleryVideoThumb = $isHomeGalleryVideo ? ('https://img.youtube.com/vi/' . $homeGalleryYouTubeId . '/hqdefault.jpg') : '';
+                    $homeGalleryVideoEmbed = $isHomeGalleryVideo ? ('https://www.youtube.com/embed/' . $homeGalleryYouTubeId . '?autoplay=1&rel=0') : '';
+                    $homeGalleryPreviewUrl = $isHomeGalleryVideo ? $homeGalleryVideoThumb : $homeGalleryImageUrl;
+                    $homeGalleryHasPreview = $isHomeGalleryVideo || (!empty($homeGalleryImagePath) && file_exists($homeGalleryImagePath));
+                    $homeGalleryOpenUrl = $isHomeGalleryVideo ? $homeGalleryVideoEmbed : (!empty($homeGalleryImageUrl) ? $homeGalleryImageUrl : '#');
                     ?>
                     <div class="col-lg-4 col-md-6" data-aos="zoom-in">
                         <div class="gallery-item">
                             <div class="w-100 h-100 bg-dark d-flex align-items-center justify-content-center text-white text-center position-relative">
-                                <?php if (!empty($homeGalleryImagePath) && file_exists($homeGalleryImagePath)): ?>
-                                    <img src="<?= $homeGalleryImageUrl ?>" alt="<?= esc($item['title']) ?>" style="width:100%;height:100%;object-fit:cover;">
+                                <?php if ($homeGalleryHasPreview): ?>
+                                    <img src="<?= $homeGalleryPreviewUrl ?>" alt="<?= esc($item['title']) ?>" style="width:100%;height:100%;object-fit:cover;">
+                                    <?php if ($isHomeGalleryVideo): ?>
+                                        <span class="gallery-play-badge" aria-hidden="true"><i class="bi bi-play-fill"></i></span>
+                                    <?php endif; ?>
                                 <?php else: ?>
                                     <span class="p-3"><?= esc($item['title']) ?></span>
                                 <?php endif; ?>
-                                <a href="<?= !empty($homeGalleryImageUrl) ? $homeGalleryImageUrl : '#' ?>" data-fancybox="gallery" data-caption="<?= esc($item['title']) ?>" class="gallery-overlay">
-                                    <i class="bi bi-plus-circle gallery-icon"></i>
+                                <a href="<?= $homeGalleryOpenUrl ?>" data-fancybox="gallery" <?= $isHomeGalleryVideo ? 'data-type="iframe"' : '' ?> data-caption="<?= esc($item['title']) ?>" class="gallery-overlay">
+                                    <i class="bi <?= $isHomeGalleryVideo ? 'bi-play-circle' : 'bi-plus-circle' ?> gallery-icon"></i>
                                     <span class="fw-semibold"><?= esc($item['title']) ?></span>
-                                    <small class="mt-1">Xem ảnh lớn</small>
+                                    <small class="mt-1"><?= $isHomeGalleryVideo ? 'Xem video' : 'Xem ảnh lớn' ?></small>
                                 </a>
                             </div>
                         </div>
@@ -352,7 +376,7 @@ $homeSectionOrders = [
                                 <?php if (!empty($homeNewsImagePath) && file_exists($homeNewsImagePath)): ?>
                                     <img src="<?= $homeNewsImageUrl ?>" alt="<?= esc($item['title']) ?>" style="width:100%;height:100%;object-fit:cover;">
                                 <?php else: ?>
-                                    <div class="w-100 h-100 bg-secondary text-white d-flex align-items-center justify-content-center" style="background: linear-gradient(135deg, #2b5876 0%, #4e4376 100%);">
+                                    <div class="w-100 h-100 bg-secondary text-white d-flex align-items-center justify-content-center" style="background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 100%);">
                                         <i class="bi bi-newspaper fs-1"></i>
                                     </div>
                                 <?php endif; ?>
@@ -378,7 +402,7 @@ $homeSectionOrders = [
 </section>
 
 <!-- Partners Section -->
-<section class="section-padding bg-light-gray home-sortable-section" data-home-section="home-partners" data-home-order="<?= $homeSectionOrders['home-partners'] ?>">
+<section class="section-padding bg-light-gray home-sortable-section home-partners-section" data-home-section="home-partners" data-home-order="<?= $homeSectionOrders['home-partners'] ?>">
     <div class="container">
         <div class="swiper partners-slider">
             <div class="swiper-wrapper align-items-center">

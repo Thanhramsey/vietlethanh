@@ -118,11 +118,24 @@ class Milestone extends AdminBaseController
     public function delete(int $id)
     {
         $milestone = $this->milestoneModel->find($id);
-        if ($milestone && !empty($milestone['image']) && file_exists(FCPATH . 'uploads/milestones/' . $milestone['image'])) {
-            @unlink(FCPATH . 'uploads/milestones/' . $milestone['image']);
+        if (!$milestone) {
+            return redirect()->to(base_url('admin/settings?tab=page-content&contentTab=timeline'))->with('error', 'Mốc lịch sử không tồn tại.');
         }
+
         $this->milestoneModel->delete($id);
 
         return redirect()->to(base_url('admin/settings?tab=page-content&contentTab=timeline'))->with('success', 'Đã xóa mốc lịch sử.');
+    }
+
+    public function restore(int $id)
+    {
+        $milestone = $this->milestoneModel->withDeleted()->find($id);
+        if (!$milestone || empty($milestone['deleted_at'])) {
+            return redirect()->to(base_url('admin/settings?tab=page-content&contentTab=timeline'))->with('error', 'Không tìm thấy mốc lịch sử đã xóa để khôi phục.');
+        }
+
+        $this->milestoneModel->builder()->where('id', $id)->set('deleted_at', null)->update();
+
+        return redirect()->to(base_url('admin/settings?tab=page-content&contentTab=timeline'))->with('success', 'Đã khôi phục mốc lịch sử.');
     }
 }

@@ -216,10 +216,6 @@ class Setting extends AdminBaseController
             return redirect()->to(base_url('admin/settings?tab=partners'))->with('error', 'Đối tác không tồn tại.');
         }
 
-        if (!empty($partner['logo']) && file_exists(FCPATH . 'uploads/partners/' . $partner['logo'])) {
-            @unlink(FCPATH . 'uploads/partners/' . $partner['logo']);
-        }
-
         $this->partnerModel->delete($id);
         return redirect()->to(base_url('admin/settings?tab=partners'))->with('success', 'Đã xóa đối tác thành công.');
     }

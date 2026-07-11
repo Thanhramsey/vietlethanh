@@ -6,12 +6,16 @@ use CodeIgniter\Model;
 
 class MilestoneModel extends Model
 {
-    protected $table         = 'company_milestones';
-    protected $primaryKey    = 'id';
-    protected $useTimestamps = true;
+    protected $table            = 'company_milestones';
+    protected $primaryKey       = 'id';
+    protected $useAutoIncrement = true;
+    protected $returnType       = 'array';
+    protected $useSoftDeletes   = true;
+    protected $useTimestamps    = true;
+    protected $deletedField     = 'deleted_at';
 
     protected $allowedFields = [
-        'year', 'title', 'description', 'image', 'sort_order', 'created_by',
+        'year', 'title', 'description', 'image', 'sort_order', 'created_by', 'updated_by',
     ];
 
     protected $validationRules = [

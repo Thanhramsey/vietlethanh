@@ -187,4 +187,70 @@ class News extends AdminBaseController
 
         return redirect()->to(base_url('admin/news'))->with('success', 'Đã xóa bài viết thành công.');
     }
+
+    public function uploadEditorAsset()
+    {
+        $file = $this->request->getFile('file');
+
+        if (!$file || !$file->isValid() || $file->hasMoved()) {
+            return $this->response->setStatusCode(400)->setJSON([
+                'error' => 'Không nhận được file hợp lệ.',
+                'csrfToken' => csrf_hash(),
+            ]);
+        }
+
+        $mimeType = (string) $file->getMimeType();
+        $isImage = str_starts_with($mimeType, 'image/');
+
+        $allowedImageMimes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+        $allowedFileMimes = [
+            'application/pdf',
+            'application/msword',
+            'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+            'application/vnd.ms-excel',
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            'application/vnd.ms-powerpoint',
+            'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+            'text/plain',
+            'application/zip',
+            'application/x-rar-compressed',
+        ];
+
+        if ($isImage && !in_array($mimeType, $allowedImageMimes, true)) {
+            return $this->response->setStatusCode(415)->setJSON([
+                'error' => 'Định dạng ảnh không được hỗ trợ.',
+                'csrfToken' => csrf_hash(),
+            ]);
+        }
+
+        if (!$isImage && !in_array($mimeType, $allowedFileMimes, true)) {
+            return $this->response->setStatusCode(415)->setJSON([
+                'error' => 'Định dạng file không được hỗ trợ.',
+                'csrfToken' => csrf_hash(),
+            ]);
+        }
+
+        $maxSize = 20 * 1024 * 1024;
+        if ((int) $file->getSize() > $maxSize) {
+            return $this->response->setStatusCode(413)->setJSON([
+                'error' => 'File vượt quá giới hạn 20MB.',
+                'csrfToken' => csrf_hash(),
+            ]);
+        }
+
+        $targetDir = $isImage ? 'uploads/news/editor/images' : 'uploads/news/editor/files';
+        $absoluteDir = FCPATH . $targetDir;
+
+        if (!is_dir($absoluteDir)) {
+            mkdir($absoluteDir, 0777, true);
+        }
+
+        $newName = $file->getRandomName();
+        $file->move($absoluteDir, $newName);
+
+        return $this->response->setJSON([
+            'location' => base_url($targetDir . '/' . $newName),
+            'csrfToken' => csrf_hash(),
+        ]);
+    }
 }

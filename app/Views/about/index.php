@@ -168,7 +168,7 @@ if (empty($valueLines)) {
 </section>
 
 <!-- ===================== COMPANY INFO SECTION ===================== -->
-<section class="section-padding" style="background: linear-gradient(135deg, #0f2044 0%, #1e3c72 50%, #2a5298 100%); position:relative; overflow:hidden;">
+<section class="section-padding" style="background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 100%); position:relative; overflow:hidden;">
     <!-- BG decorations -->
     <div style="position:absolute;width:600px;height:600px;border-radius:50%;border:1px solid rgba(255,255,255,0.05);top:-200px;right:-150px;"></div>
     <div style="position:absolute;width:400px;height:400px;border-radius:50%;border:1px solid rgba(255,255,255,0.07);bottom:-100px;left:-100px;"></div>
@@ -382,7 +382,7 @@ if (empty($valueLines)) {
 /* ===== ABOUT HERO BANNER ===== */
 .about-hero-banner {
     position: relative;
-    background: linear-gradient(135deg, #0a1628 0%, #0f2044 35%, #1e3c72 70%, #2a5298 100%);
+    background: linear-gradient(135deg, color-mix(in srgb, var(--primary-dark) 75%, #000 25%) 0%, var(--primary-dark) 45%, var(--primary-color) 100%);
     padding: 120px 0 100px;
     overflow: hidden;
     text-align: center;
@@ -482,7 +482,7 @@ if (empty($valueLines)) {
     box-shadow: 0 20px 60px rgba(30,60,114,0.2);
 }
 .about-img-placeholder {
-    background: linear-gradient(135deg, #0f2044 0%, #1e3c72 50%, #2a5298 100%);
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 100%);
     height: 420px;
     display: flex;
     flex-direction: column;
@@ -520,7 +520,7 @@ if (empty($valueLines)) {
 /* ===== EYEBROW ===== */
 .section-eyebrow {
     display: inline-block;
-    background: rgba(30,60,114,0.08);
+    background: rgba(var(--primary-dark-rgb), 0.08);
     color: var(--primary-color);
     font-size: 0.78rem;
     font-weight: 700;
@@ -537,7 +537,7 @@ if (empty($valueLines)) {
     align-items: center;
     gap: 12px;
     background: #f8faff;
-    border: 1px solid rgba(30,60,114,0.08);
+    border: 1px solid rgba(var(--primary-dark-rgb), 0.08);
     border-radius: 10px;
     padding: 12px 16px;
     font-weight: 500;
@@ -615,9 +615,9 @@ if (empty($valueLines)) {
     color: #fff;
     margin-bottom: 20px;
 }
-.vmv-vision .vmv-icon-wrap  { background: linear-gradient(135deg, #1e3c72, #2a5298); }
-.vmv-mission .vmv-icon-wrap { background: linear-gradient(135deg, #00875a, #00b09b); }
-.vmv-values .vmv-icon-wrap  { background: linear-gradient(135deg, #e05a00, #f97316); }
+.vmv-vision .vmv-icon-wrap  { background: linear-gradient(135deg, var(--primary-dark), var(--primary-color)); }
+.vmv-mission .vmv-icon-wrap { background: linear-gradient(135deg, var(--accent-color), var(--primary-dark)); }
+.vmv-values .vmv-icon-wrap  { background: linear-gradient(135deg, var(--primary-color), var(--accent-color)); }
 .vmv-number {
     position: absolute;
     top: 20px; right: 28px;
@@ -651,15 +651,15 @@ if (empty($valueLines)) {
     margin-bottom: 10px;
     line-height: 1.5;
 }
-.vmv-list li i { color: #00875a; flex-shrink: 0; margin-top: 2px; }
+.vmv-list li i { color: var(--accent-color); flex-shrink: 0; margin-top: 2px; }
 .vmv-line {
     position: absolute;
     bottom: 0; left: 0;
     height: 4px; width: 100%;
 }
-.vmv-vision .vmv-line  { background: linear-gradient(90deg, #1e3c72, #2a5298); }
-.vmv-mission .vmv-line { background: linear-gradient(90deg, #00875a, #00b09b); }
-.vmv-values .vmv-line  { background: linear-gradient(90deg, #e05a00, #f97316); }
+.vmv-vision .vmv-line  { background: linear-gradient(90deg, var(--primary-dark), var(--primary-color)); }
+.vmv-mission .vmv-line { background: linear-gradient(90deg, var(--accent-color), var(--primary-dark)); }
+.vmv-values .vmv-line  { background: linear-gradient(90deg, var(--primary-color), var(--accent-color)); }
 
 /* ===== SECTOR CARDS ===== */
 .sector-card {
@@ -673,9 +673,9 @@ if (empty($valueLines)) {
     transition: all 0.35s;
     border-top: 4px solid transparent;
 }
-.sector-hotel      { border-top-color: #2a5298; }
-.sector-construction { border-top-color: #e05a00; }
-.sector-farm       { border-top-color: #00875a; }
+.sector-hotel      { border-top-color: var(--primary-color); }
+.sector-construction { border-top-color: var(--accent-color); }
+.sector-farm       { border-top-color: var(--primary-dark); }
 .sector-card:hover { transform: translateY(-8px); box-shadow: 0 20px 56px rgba(0,0,0,0.12); }
 .sector-icon-ring {
     width: 72px; height: 72px;
@@ -685,9 +685,9 @@ if (empty($valueLines)) {
     color: #fff;
     margin-bottom: 22px;
 }
-.sector-hotel .sector-icon-ring      { background: linear-gradient(135deg, #1e3c72, #2a5298); }
-.sector-construction .sector-icon-ring { background: linear-gradient(135deg, #e05a00, #f97316); }
-.sector-farm .sector-icon-ring       { background: linear-gradient(135deg, #00875a, #00b09b); }
+.sector-hotel .sector-icon-ring      { background: linear-gradient(135deg, var(--primary-dark), var(--primary-color)); }
+.sector-construction .sector-icon-ring { background: linear-gradient(135deg, var(--accent-color), var(--primary-color)); }
+.sector-farm .sector-icon-ring       { background: linear-gradient(135deg, var(--primary-dark), var(--accent-color)); }
 .sector-card h4 { font-weight: 700; margin-bottom: 14px; color: #1a1a2e; }
 .sector-card p  { color: #666; font-size: 0.9rem; line-height: 1.75; margin-bottom: 20px; }
 .sector-link {
@@ -699,15 +699,15 @@ if (empty($valueLines)) {
     text-decoration: none;
     transition: gap 0.2s;
 }
-.sector-hotel .sector-link      { color: #2a5298; }
-.sector-construction .sector-link { color: #e05a00; }
-.sector-farm .sector-link       { color: #00875a; }
+.sector-hotel .sector-link      { color: var(--primary-color); }
+.sector-construction .sector-link { color: var(--accent-color); }
+.sector-farm .sector-link       { color: var(--primary-dark); }
 .sector-link:hover { gap: 12px; }
 
 /* ===== CTA SECTION ===== */
 .about-cta-section { padding: 60px 0; }
 .about-cta-inner {
-    background: linear-gradient(135deg, #0f2044 0%, #1e3c72 50%, #2a5298 100%);
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 100%);
     border-radius: 24px;
     padding: 48px 52px;
     box-shadow: 0 20px 60px rgba(30,60,114,0.3);

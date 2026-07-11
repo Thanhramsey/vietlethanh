@@ -53,6 +53,59 @@
                             <input type="text" class="form-control" name="working_hours" value="<?= esc(get_setting('working_hours')) ?>">
                         </div>
                         <div class="col-md-6">
+                            <label class="form-label fw-semibold">Preset Font FE</label>
+                            <select class="form-select" name="theme_font_preset">
+                                <?php $fontPreset = get_setting('theme_font_preset', 'inter_outfit'); ?>
+                                <option value="inter_outfit" <?= $fontPreset === 'inter_outfit' ? 'selected' : '' ?>>Inter + Outfit (Hiện đại, cân bằng)</option>
+                                <option value="manrope_plusjakarta" <?= $fontPreset === 'manrope_plusjakarta' ? 'selected' : '' ?>>Manrope + Plus Jakarta Sans (Sắc nét, cao cấp)</option>
+                                <option value="nunito_poppins" <?= $fontPreset === 'nunito_poppins' ? 'selected' : '' ?>>Nunito + Poppins (Mềm mại, thân thiện)</option>
+                                <option value="montserrat_lato" <?= $fontPreset === 'montserrat_lato' ? 'selected' : '' ?>>Montserrat + Lato (Doanh nghiệp, rõ ràng)</option>
+                                <option value="spacemono_dmsans" <?= $fontPreset === 'spacemono_dmsans' ? 'selected' : '' ?>>Space Grotesk + DM Sans (Tech, hiện đại)</option>
+                                <option value="playfair_sourcesans" <?= $fontPreset === 'playfair_sourcesans' ? 'selected' : '' ?>>Playfair Display + Source Sans 3 (Thanh lịch)</option>
+                                <option value="merriweather_worksans" <?= $fontPreset === 'merriweather_worksans' ? 'selected' : '' ?>>Merriweather + Work Sans (Biên tập, dễ đọc)</option>
+                                <option value="raleway_urbanist" <?= $fontPreset === 'raleway_urbanist' ? 'selected' : '' ?>>Raleway + Urbanist (Trẻ trung, linh hoạt)</option>
+                                <option value="oswald_mulish" <?= $fontPreset === 'oswald_mulish' ? 'selected' : '' ?>>Oswald + Mulish (Mạnh mẽ, nổi bật)</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Preset Màu Chủ Đạo FE</label>
+                            <select class="form-select" name="theme_color_preset">
+                                <?php $colorPreset = get_setting('theme_color_preset', 'ocean_blue'); ?>
+                                <option value="ocean_blue" <?= $colorPreset === 'ocean_blue' ? 'selected' : '' ?>>Ocean Blue (#0b5ed7)</option>
+                                <option value="emerald" <?= $colorPreset === 'emerald' ? 'selected' : '' ?>>Emerald (#0f766e)</option>
+                                <option value="sunset_orange" <?= $colorPreset === 'sunset_orange' ? 'selected' : '' ?>>Sunset Orange (#ea580c)</option>
+                                <option value="ruby_red" <?= $colorPreset === 'ruby_red' ? 'selected' : '' ?>>Ruby Red (#c81e3a)</option>
+                                <option value="indigo_night" <?= $colorPreset === 'indigo_night' ? 'selected' : '' ?>>Indigo Night (#4338ca)</option>
+                                <option value="teal_cyan" <?= $colorPreset === 'teal_cyan' ? 'selected' : '' ?>>Teal Cyan (#0f766e)</option>
+                                <option value="royal_purple" <?= $colorPreset === 'royal_purple' ? 'selected' : '' ?>>Royal Purple (#6d28d9)</option>
+                                <option value="rose_pink" <?= $colorPreset === 'rose_pink' ? 'selected' : '' ?>>Rose Pink (#e11d48)</option>
+                                <option value="forest_green" <?= $colorPreset === 'forest_green' ? 'selected' : '' ?>>Forest Green (#166534)</option>
+                            </select>
+                            <small class="text-muted">Hệ thống tự chọn màu chữ tương thích theo preset.</small>
+                        </div>
+                        <div class="col-12">
+                            <div class="border rounded-4 p-3 bg-light" id="theme-preview-box">
+                                <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-3">
+                                    <h6 class="mb-0 fw-bold">Xem trước giao diện</h6>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <span class="badge rounded-pill" id="preview-primary" style="background:#0b5ed7;">Primary</span>
+                                        <span class="badge rounded-pill" id="preview-dark" style="background:#0a369d;">Dark</span>
+                                        <span class="badge rounded-pill text-dark" id="preview-light" style="background:#eef2ff;">Light</span>
+                                    </div>
+                                </div>
+                                <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+                                    <div class="p-3 text-white" id="preview-hero" style="background:linear-gradient(135deg,#0a369d,#0b5ed7);">
+                                        <small class="opacity-75 d-block">MẪU HEADER</small>
+                                        <h5 class="mb-0" id="preview-heading" style="font-family:'Outfit',sans-serif;">Tiêu đề Website</h5>
+                                    </div>
+                                    <div class="p-3 bg-white">
+                                        <p class="mb-2" id="preview-body" style="font-family:'Inter',sans-serif;">Đây là đoạn mô tả mẫu để xem mức độ dễ đọc với font và màu đang chọn.</p>
+                                        <button type="button" class="btn btn-sm text-white" id="preview-btn" style="background:#0b5ed7;">Nút hành động</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
                             <label class="form-label fw-semibold">Logo đơn vị</label>
                             <?php if (get_setting('site_logo')): ?>
                                 <div class="mb-2 p-2 border rounded bg-light d-inline-block">
@@ -699,6 +752,66 @@ document.addEventListener('DOMContentLoaded', function () {
             history.replaceState({}, '', url.toString());
         });
     });
+
+    const fontSelect = document.querySelector('select[name="theme_font_preset"]');
+    const colorSelect = document.querySelector('select[name="theme_color_preset"]');
+
+    const previewHeading = document.getElementById('preview-heading');
+    const previewBody = document.getElementById('preview-body');
+    const previewBtn = document.getElementById('preview-btn');
+    const previewHero = document.getElementById('preview-hero');
+    const previewPrimary = document.getElementById('preview-primary');
+    const previewDark = document.getElementById('preview-dark');
+    const previewLight = document.getElementById('preview-light');
+
+    const fontMap = {
+        inter_outfit: { heading: "'Outfit', 'Inter', sans-serif", body: "'Inter', sans-serif" },
+        manrope_plusjakarta: { heading: "'Plus Jakarta Sans', 'Manrope', sans-serif", body: "'Manrope', sans-serif" },
+        nunito_poppins: { heading: "'Poppins', 'Nunito', sans-serif", body: "'Nunito', sans-serif" },
+        montserrat_lato: { heading: "'Montserrat', 'Lato', sans-serif", body: "'Lato', sans-serif" },
+        spacemono_dmsans: { heading: "'Space Grotesk', 'DM Sans', sans-serif", body: "'DM Sans', sans-serif" },
+        playfair_sourcesans: { heading: "'Playfair Display', 'Source Sans 3', serif", body: "'Source Sans 3', sans-serif" },
+        merriweather_worksans: { heading: "'Merriweather', 'Work Sans', serif", body: "'Work Sans', sans-serif" },
+        raleway_urbanist: { heading: "'Raleway', 'Urbanist', sans-serif", body: "'Urbanist', sans-serif" },
+        oswald_mulish: { heading: "'Oswald', 'Mulish', sans-serif", body: "'Mulish', sans-serif" },
+    };
+
+    const colorMap = {
+        ocean_blue: { primary: '#0b5ed7', dark: '#0a369d', light: '#eef2ff' },
+        emerald: { primary: '#0f766e', dark: '#115e59', light: '#e8f7f5' },
+        sunset_orange: { primary: '#ea580c', dark: '#c2410c', light: '#fff1e9' },
+        ruby_red: { primary: '#c81e3a', dark: '#9f1239', light: '#ffecef' },
+        indigo_night: { primary: '#4338ca', dark: '#312e81', light: '#eeedff' },
+        teal_cyan: { primary: '#0f766e', dark: '#155e75', light: '#e9fbfb' },
+        royal_purple: { primary: '#6d28d9', dark: '#4c1d95', light: '#f3e8ff' },
+        rose_pink: { primary: '#e11d48', dark: '#9f1239', light: '#ffe4ec' },
+        forest_green: { primary: '#166534', dark: '#14532d', light: '#eaf7ee' },
+    };
+
+    function applyThemePreview() {
+        if (!fontSelect || !colorSelect || !previewHeading || !previewBody || !previewBtn || !previewHero) return;
+
+        const selectedFont = fontMap[fontSelect.value] || fontMap.inter_outfit;
+        const selectedColor = colorMap[colorSelect.value] || colorMap.ocean_blue;
+
+        previewHeading.style.fontFamily = selectedFont.heading;
+        previewBody.style.fontFamily = selectedFont.body;
+
+        previewPrimary.style.background = selectedColor.primary;
+        previewDark.style.background = selectedColor.dark;
+        previewLight.style.background = selectedColor.light;
+
+        previewHero.style.background = 'linear-gradient(135deg,' + selectedColor.dark + ',' + selectedColor.primary + ')';
+        previewBtn.style.background = selectedColor.primary;
+    }
+
+    if (fontSelect) {
+        fontSelect.addEventListener('change', applyThemePreview);
+    }
+    if (colorSelect) {
+        colorSelect.addEventListener('change', applyThemePreview);
+    }
+    applyThemePreview();
 });
 </script>
 

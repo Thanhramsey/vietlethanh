@@ -25,10 +25,10 @@ $currentFlagUrl = $currentLocale === 'vi' ? 'https://flagcdn.com/w20/vn.png' : '
 <header class="header-wrapper">
     <nav class="navbar navbar-expand-lg navbar-light py-3">
         <div class="container">
-            <a class="navbar-brand text-wrap" href="<?= base_url() ?>" style="max-width: 320px;">
+            <a class="navbar-brand text-wrap" href="<?= base_url() ?>" style="max-width: 420px;">
                 <div class="d-flex align-items-center">
                     <?php if (get_setting('site_logo')): ?>
-                        <img src="<?= base_url('uploads/settings/' . get_setting('site_logo')) ?>" alt="<?= esc(get_setting('company_name', 'Việt Lệ Thanh')) ?>" style="max-height: 48px; width: auto;" class="me-2">
+                        <img src="<?= base_url('uploads/settings/' . get_setting('site_logo')) ?>" alt="<?= esc(get_setting('company_name', 'Việt Lệ Thanh')) ?>" style="max-height: 64px; width: auto;" class="me-1">
                     <?php else: ?>
                         <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 42px; height: 42px; min-width: 42px;">
                             <span class="fw-bold fs-5">VLT</span>

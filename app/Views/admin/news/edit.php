@@ -51,7 +51,18 @@
                 <!-- Content -->
                 <div class="col-12">
                     <label for="content" class="form-label fw-semibold">Nội dung chi tiết <span class="text-danger">*</span></label>
+                    <small class="text-muted d-block mb-2">Hỗ trợ chèn ảnh và file trực tiếp từ máy tính trong toolbar editor.</small>
                     <textarea class="form-control" id="content" name="content" rows="12" required><?= old('content', $news['content']) ?></textarea>
+                    <div class="mt-2">
+                        <button type="button" id="insert-local-image-btn" class="btn btn-sm btn-outline-primary rounded-pill me-2">
+                            <i class="bi bi-image me-1"></i> Chèn ảnh từ máy
+                        </button>
+                        <button type="button" id="insert-local-file-btn" class="btn btn-sm btn-outline-secondary rounded-pill">
+                            <i class="bi bi-paperclip me-1"></i> Chèn file từ máy
+                        </button>
+                        <input type="file" id="local-image-input" class="d-none" accept="image/*">
+                        <input type="file" id="local-file-input" class="d-none">
+                    </div>
                 </div>
                 
                 <!-- Image upload and preview -->
@@ -120,5 +131,130 @@
         </form>
     </div>
 </div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jodit@4.2.27/es2021/jodit.min.css">
+<script src="https://cdn.jsdelivr.net/npm/jodit@4.2.27/es2021/jodit.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const csrfName = '<?= csrf_token() ?>';
+    let csrfToken = '<?= csrf_hash() ?>';
+    const uploadUrl = '<?= base_url('admin/news/editor-upload') ?>';
+    const formCsrfInput = document.querySelector('input[name="' + csrfName + '"]');
+    const imageBtn = document.getElementById('insert-local-image-btn');
+    const imageInput = document.getElementById('local-image-input');
+    const fileBtn = document.getElementById('insert-local-file-btn');
+    const fileInput = document.getElementById('local-file-input');
+
+    function updateCsrfToken(newToken) {
+        if (!newToken) return;
+        csrfToken = newToken;
+        if (formCsrfInput) {
+            formCsrfInput.value = newToken;
+        }
+    }
+
+    function uploadEditorFile(file) {
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append(csrfName, csrfToken);
+
+        return fetch(uploadUrl, {
+            method: 'POST',
+            credentials: 'same-origin',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            body: formData
+        })
+        .then(async (response) => {
+            const data = await response.json();
+            updateCsrfToken(data.csrfToken || '');
+
+            if (!response.ok || !data.location) {
+                throw new Error(data.error || 'Tải file thất bại.');
+            }
+
+            return data.location;
+        });
+    }
+
+    const editor = Jodit.make('#content', {
+        height: 500,
+        toolbarAdaptive: false,
+        buttons: 'source,|,bold,italic,underline,strikethrough,|,ul,ol,|,outdent,indent,|,font,fontsize,brush,paragraph,|,image,link,table,|,align,undo,redo,|,hr,eraser,fullsize',
+        uploader: {
+            url: uploadUrl,
+            method: 'POST',
+            format: 'json',
+            filesVariableName: function () { return 'file'; },
+            prepareData: function (formData) {
+                formData.append(csrfName, csrfToken);
+                return formData;
+            },
+            isSuccess: function (resp) {
+                updateCsrfToken(resp && resp.csrfToken ? resp.csrfToken : '');
+                return !!(resp && resp.location);
+            },
+            process: function (resp) {
+                updateCsrfToken(resp && resp.csrfToken ? resp.csrfToken : '');
+                return {
+                    files: resp && resp.location ? [resp.location] : [],
+                    path: '',
+                    baseurl: ''
+                };
+            },
+            getMessage: function (resp) {
+                return (resp && resp.error) ? resp.error : 'Tải file thất bại.';
+            }
+        }
+    });
+
+    if (fileBtn && fileInput) {
+        fileBtn.addEventListener('click', function () {
+            fileInput.click();
+        });
+
+        fileInput.addEventListener('change', function () {
+            const file = fileInput.files && fileInput.files[0] ? fileInput.files[0] : null;
+            if (!file) return;
+
+            uploadEditorFile(file)
+                .then(function (url) {
+                    const safeName = (file.name || 'Tải file').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                    editor.s.insertHTML('<p><a href="' + url + '" target="_blank" rel="noopener">' + safeName + '</a></p>');
+                })
+                .catch(function (err) {
+                    alert(err.message || 'Tải file thất bại.');
+                })
+                .finally(function () {
+                    fileInput.value = '';
+                });
+        });
+    }
+
+    if (imageBtn && imageInput) {
+        imageBtn.addEventListener('click', function () {
+            imageInput.click();
+        });
+
+        imageInput.addEventListener('change', function () {
+            const file = imageInput.files && imageInput.files[0] ? imageInput.files[0] : null;
+            if (!file) return;
+
+            uploadEditorFile(file)
+                .then(function (url) {
+                    const safeAlt = (file.name || 'image').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                    editor.s.insertHTML('<p><img src="' + url + '" alt="' + safeAlt + '" style="max-width:100%;height:auto;"></p>');
+                })
+                .catch(function (err) {
+                    alert(err.message || 'Tải ảnh thất bại.');
+                })
+                .finally(function () {
+                    imageInput.value = '';
+                });
+        });
+    }
+});
+</script>
 
 <?= $this->endSection() ?>

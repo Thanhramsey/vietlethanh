@@ -1,6 +1,115 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
+    <?php
+    $fontPresets = [
+        'inter_outfit' => [
+            'google'  => 'family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800',
+            'heading' => "'Outfit', 'Inter', sans-serif",
+            'body'    => "'Inter', sans-serif",
+        ],
+        'manrope_plusjakarta' => [
+            'google'  => 'family=Manrope:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800',
+            'heading' => "'Plus Jakarta Sans', 'Manrope', sans-serif",
+            'body'    => "'Manrope', sans-serif",
+        ],
+        'nunito_poppins' => [
+            'google'  => 'family=Nunito:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700;800',
+            'heading' => "'Poppins', 'Nunito', sans-serif",
+            'body'    => "'Nunito', sans-serif",
+        ],
+        'montserrat_lato' => [
+            'google'  => 'family=Lato:wght@400;700;900&family=Montserrat:wght@400;500;600;700;800',
+            'heading' => "'Montserrat', 'Lato', sans-serif",
+            'body'    => "'Lato', sans-serif",
+        ],
+        'spacemono_dmsans' => [
+            'google'  => 'family=DM+Sans:wght@400;500;700;800&family=Space+Grotesk:wght@400;500;600;700',
+            'heading' => "'Space Grotesk', 'DM Sans', sans-serif",
+            'body'    => "'DM Sans', sans-serif",
+        ],
+        'playfair_sourcesans' => [
+            'google'  => 'family=Playfair+Display:wght@500;600;700&family=Source+Sans+3:wght@400;500;600;700',
+            'heading' => "'Playfair Display', 'Source Sans 3', serif",
+            'body'    => "'Source Sans 3', sans-serif",
+        ],
+        'merriweather_worksans' => [
+            'google'  => 'family=Merriweather:wght@400;700;900&family=Work+Sans:wght@400;500;600;700',
+            'heading' => "'Merriweather', 'Work Sans', serif",
+            'body'    => "'Work Sans', sans-serif",
+        ],
+        'raleway_urbanist' => [
+            'google'  => 'family=Raleway:wght@500;600;700;800&family=Urbanist:wght@400;500;600;700',
+            'heading' => "'Raleway', 'Urbanist', sans-serif",
+            'body'    => "'Urbanist', sans-serif",
+        ],
+        'oswald_mulish' => [
+            'google'  => 'family=Mulish:wght@400;500;600;700;800&family=Oswald:wght@400;500;600;700',
+            'heading' => "'Oswald', 'Mulish', sans-serif",
+            'body'    => "'Mulish', sans-serif",
+        ],
+    ];
+
+    $colorPresets = [
+        'ocean_blue' => [
+            'primary' => '#0b5ed7', 'dark' => '#0a369d', 'light' => '#eef2ff', 'accent' => '#f59e0b',
+            'text' => '#2c3e50', 'muted' => '#6c757d', 'bg_light' => '#f8f9fa',
+            'primary_rgb' => '11, 94, 215', 'dark_rgb' => '10, 54, 157',
+        ],
+        'emerald' => [
+            'primary' => '#0f766e', 'dark' => '#115e59', 'light' => '#e8f7f5', 'accent' => '#d97706',
+            'text' => '#1f2937', 'muted' => '#64748b', 'bg_light' => '#f6faf9',
+            'primary_rgb' => '15, 118, 110', 'dark_rgb' => '17, 94, 89',
+        ],
+        'sunset_orange' => [
+            'primary' => '#ea580c', 'dark' => '#c2410c', 'light' => '#fff1e9', 'accent' => '#0369a1',
+            'text' => '#2b2b2b', 'muted' => '#6b7280', 'bg_light' => '#fffaf7',
+            'primary_rgb' => '234, 88, 12', 'dark_rgb' => '194, 65, 12',
+        ],
+        'ruby_red' => [
+            'primary' => '#c81e3a', 'dark' => '#9f1239', 'light' => '#ffecef', 'accent' => '#0e7490',
+            'text' => '#1f2937', 'muted' => '#6b7280', 'bg_light' => '#fff9fa',
+            'primary_rgb' => '200, 30, 58', 'dark_rgb' => '159, 18, 57',
+        ],
+        'indigo_night' => [
+            'primary' => '#4338ca', 'dark' => '#312e81', 'light' => '#eeedff', 'accent' => '#0891b2',
+            'text' => '#1f2937', 'muted' => '#64748b', 'bg_light' => '#f7f7ff',
+            'primary_rgb' => '67, 56, 202', 'dark_rgb' => '49, 46, 129',
+        ],
+        'teal_cyan' => [
+            'primary' => '#0f766e', 'dark' => '#155e75', 'light' => '#e9fbfb', 'accent' => '#f59e0b',
+            'text' => '#0f172a', 'muted' => '#64748b', 'bg_light' => '#f5fcfc',
+            'primary_rgb' => '15, 118, 110', 'dark_rgb' => '21, 94, 117',
+        ],
+        'royal_purple' => [
+            'primary' => '#6d28d9', 'dark' => '#4c1d95', 'light' => '#f3e8ff', 'accent' => '#f59e0b',
+            'text' => '#1f2937', 'muted' => '#64748b', 'bg_light' => '#faf5ff',
+            'primary_rgb' => '109, 40, 217', 'dark_rgb' => '76, 29, 149',
+        ],
+        'rose_pink' => [
+            'primary' => '#e11d48', 'dark' => '#9f1239', 'light' => '#ffe4ec', 'accent' => '#0e7490',
+            'text' => '#1f2937', 'muted' => '#6b7280', 'bg_light' => '#fff7fa',
+            'primary_rgb' => '225, 29, 72', 'dark_rgb' => '159, 18, 57',
+        ],
+        'forest_green' => [
+            'primary' => '#166534', 'dark' => '#14532d', 'light' => '#eaf7ee', 'accent' => '#d97706',
+            'text' => '#1f2937', 'muted' => '#64748b', 'bg_light' => '#f4fbf6',
+            'primary_rgb' => '22, 101, 52', 'dark_rgb' => '20, 83, 45',
+        ],
+    ];
+
+    $fontKey = get_setting('theme_font_preset', 'inter_outfit');
+    if (!array_key_exists($fontKey, $fontPresets)) {
+        $fontKey = 'inter_outfit';
+    }
+    $fontPreset = $fontPresets[$fontKey];
+
+    $colorKey = get_setting('theme_color_preset', 'ocean_blue');
+    if (!array_key_exists($colorKey, $colorPresets)) {
+        $colorKey = 'ocean_blue';
+    }
+    $themeColors = $colorPresets[$colorKey];
+    ?>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
@@ -20,7 +129,7 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?<?= esc($fontPreset['google']) ?>&display=swap" rel="stylesheet">
     
     <!-- Bootstrap 5.3 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -39,6 +148,32 @@
     
     <!-- Custom CSS -->
     <link rel="stylesheet" href="<?= base_url('css/style.css') ?>">
+    <style>
+        :root {
+            --primary-color: <?= esc($themeColors['primary']) ?>;
+            --primary-dark: <?= esc($themeColors['dark']) ?>;
+            --primary-light: <?= esc($themeColors['light']) ?>;
+            --accent-color: <?= esc($themeColors['accent']) ?>;
+            --text-color: <?= esc($themeColors['text']) ?>;
+            --text-muted: <?= esc($themeColors['muted']) ?>;
+            --bg-light: <?= esc($themeColors['bg_light']) ?>;
+            --primary-rgb: <?= esc($themeColors['primary_rgb']) ?>;
+            --primary-dark-rgb: <?= esc($themeColors['dark_rgb']) ?>;
+            --font-heading: <?= $fontPreset['heading'] ?>;
+            --font-body: <?= $fontPreset['body'] ?>;
+
+            /* Sync Bootstrap semantic colors with site theme */
+            --bs-primary: <?= esc($themeColors['primary']) ?>;
+            --bs-primary-rgb: <?= esc($themeColors['primary_rgb']) ?>;
+            --bs-link-color: <?= esc($themeColors['primary']) ?>;
+            --bs-link-hover-color: <?= esc($themeColors['dark']) ?>;
+
+            --bs-btn-hover-bg: <?= esc($themeColors['dark']) ?>;
+            --bs-btn-hover-border-color: <?= esc($themeColors['dark']) ?>;
+            --bs-btn-active-bg: <?= esc($themeColors['dark']) ?>;
+            --bs-btn-active-border-color: <?= esc($themeColors['dark']) ?>;
+        }
+    </style>
 </head>
 <body>
 

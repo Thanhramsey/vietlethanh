@@ -2,6 +2,21 @@
 
 <?= $this->section('content') ?>
 
+<?php
+$extractYouTubeId = static function (string $url): ?string {
+    $url = trim($url);
+    if ($url === '') {
+        return null;
+    }
+
+    if (preg_match('~(?:youtube\.com/(?:watch\?v=|embed/|shorts/)|youtu\.be/)([A-Za-z0-9_-]{11})~i', $url, $m)) {
+        return $m[1] ?? null;
+    }
+
+    return null;
+};
+?>
+
 <!-- Page Header / Breadcrumbs -->
 <div class="page-header">
     <div class="container" data-aos="fade-down">
@@ -36,18 +51,29 @@
                     <?php
                     $galleryImagePath = !empty($item['image']) ? FCPATH . 'uploads/gallery/' . $item['image'] : '';
                     $galleryImageUrl = !empty($item['image']) ? base_url('uploads/gallery/' . $item['image']) : '';
+                    $galleryVideoUrl = trim((string) ($item['video'] ?? ''));
+                    $galleryYouTubeId = $extractYouTubeId($galleryVideoUrl);
+                    $isGalleryVideo = !empty($galleryYouTubeId);
+                    $galleryVideoThumb = $isGalleryVideo ? ('https://img.youtube.com/vi/' . $galleryYouTubeId . '/hqdefault.jpg') : '';
+                    $galleryVideoEmbed = $isGalleryVideo ? ('https://www.youtube.com/embed/' . $galleryYouTubeId . '?autoplay=1&rel=0') : '';
+                    $galleryPreviewUrl = $isGalleryVideo ? $galleryVideoThumb : $galleryImageUrl;
+                    $galleryHasPreview = $isGalleryVideo || (!empty($galleryImagePath) && file_exists($galleryImagePath));
+                    $galleryOpenUrl = $isGalleryVideo ? $galleryVideoEmbed : (!empty($galleryImageUrl) ? $galleryImageUrl : '#');
                     ?>
                     <div class="col-lg-4 col-md-6 gallery-card" data-category="<?= esc($item['album']) ?>" data-aos="zoom-in">
                         <div class="gallery-item">
                             <div class="w-100 h-100 bg-dark d-flex align-items-center justify-content-center text-white text-center position-relative">
-                                <?php if (!empty($galleryImagePath) && file_exists($galleryImagePath)): ?>
-                                    <img src="<?= $galleryImageUrl ?>" alt="<?= esc($item['title']) ?>" style="width:100%;height:100%;object-fit:cover;">
+                                <?php if ($galleryHasPreview): ?>
+                                    <img src="<?= $galleryPreviewUrl ?>" alt="<?= esc($item['title']) ?>" style="width:100%;height:100%;object-fit:cover;">
+                                    <?php if ($isGalleryVideo): ?>
+                                        <span class="gallery-play-badge" aria-hidden="true"><i class="bi bi-play-fill"></i></span>
+                                    <?php endif; ?>
                                 <?php else: ?>
                                     <span class="p-3"><?= esc($item['title']) ?></span>
                                 <?php endif; ?>
-                                <a href="<?= !empty($galleryImageUrl) ? $galleryImageUrl : '#' ?>" data-fancybox="gallery" data-caption="<?= esc($item['title']) ?>" class="gallery-overlay">
-                                    <i class="bi bi-plus-circle gallery-icon"></i>
-                                    <span>Xem Ảnh Lớn</span>
+                                <a href="<?= $galleryOpenUrl ?>" data-fancybox="gallery" <?= $isGalleryVideo ? 'data-type="iframe"' : '' ?> data-caption="<?= esc($item['title']) ?>" class="gallery-overlay">
+                                    <i class="bi <?= $isGalleryVideo ? 'bi-play-circle' : 'bi-plus-circle' ?> gallery-icon"></i>
+                                    <span><?= $isGalleryVideo ? 'Xem Video' : 'Xem Ảnh Lớn' ?></span>
                                 </a>
                             </div>
                         </div>
@@ -57,7 +83,7 @@
                 <!-- Fallback premium styled items for demo and initial use -->
                 <div class="col-lg-4 col-md-6 gallery-card" data-category="accommodation" data-aos="zoom-in" data-aos-delay="100">
                     <div class="gallery-item">
-                        <div class="w-100 h-100 bg-primary text-white d-flex align-items-center justify-content-center position-relative" style="background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);">
+                        <div class="w-100 h-100 bg-primary text-white d-flex align-items-center justify-content-center position-relative" style="background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 100%);">
                             <div class="text-center p-3">
                                 <i class="bi bi-door-open fs-2 mb-2"></i>
                                 <h6>Phòng đơn sạch sẽ, thoáng mát</h6>
@@ -71,7 +97,7 @@
                 </div>
                 <div class="col-lg-4 col-md-6 gallery-card" data-category="accommodation" data-aos="zoom-in" data-aos-delay="200">
                     <div class="gallery-item">
-                        <div class="w-100 h-100 bg-primary text-white d-flex align-items-center justify-content-center position-relative" style="background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);">
+                        <div class="w-100 h-100 bg-primary text-white d-flex align-items-center justify-content-center position-relative" style="background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 100%);">
                             <div class="text-center p-3">
                                 <i class="bi bi-tv fs-2 mb-2"></i>
                                 <h6>Trang bị nội thất phòng đôi đầy đủ tiện nghi</h6>

@@ -94,6 +94,11 @@
                         <i class="bi bi-folder-symlink"></i> Album Ảnh
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link <?= (uri_string() == 'admin/trash') ? 'active' : '' ?>" href="<?= base_url('admin/trash') ?>">
+                        <i class="bi bi-trash3"></i> Thùng Rác
+                    </a>
+                </li>
                 <li class="nav-item mt-4 border-top border-secondary">
                     <a class="nav-link text-danger" href="<?= base_url('admin/logout') ?>">
                         <i class="bi bi-box-arrow-left text-danger"></i> Đăng Thoát

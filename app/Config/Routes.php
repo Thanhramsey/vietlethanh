@@ -64,6 +64,7 @@ $routes->group('admin', function($routes) {
     $routes->post('news/store', 'Admin\News::store');
     $routes->get('news/edit/(:num)', 'Admin\News::edit/$1');
     $routes->post('news/update/(:num)', 'Admin\News::update/$1');
+    $routes->post('news/editor-upload', 'Admin\News::uploadEditorAsset');
     $routes->get('news/delete/(:num)', 'Admin\News::delete/$1');
     
     // Gallery CRUD
@@ -125,4 +126,9 @@ $routes->group('admin', function($routes) {
     $routes->get('milestones/edit/(:num)', 'Admin\Milestone::edit/$1');
     $routes->post('milestones/update/(:num)', 'Admin\Milestone::update/$1');
     $routes->get('milestones/delete/(:num)', 'Admin\Milestone::delete/$1');
+    $routes->get('milestones/restore/(:num)', 'Admin\Milestone::restore/$1');
+
+    // Trash (soft-delete restore)
+    $routes->get('trash', 'Admin\Trash::index');
+    $routes->get('trash/restore/(:segment)/(:num)', 'Admin\Trash::restore/$1/$2');
 });
