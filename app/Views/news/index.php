@@ -5,11 +5,11 @@
 <!-- Page Header / Breadcrumbs -->
 <div class="page-header">
     <div class="container" data-aos="fade-down">
-        <h1>Tin Tức & Sự Kiện</h1>
+        <h1><?= esc(lang('Site.news_events')) ?></h1>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="<?= base_url() ?>">Trang chủ</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Tin tức</li>
+                <li class="breadcrumb-item"><a href="<?= base_url() ?>"><?= esc(lang('Site.home')) ?></a></li>
+                <li class="breadcrumb-item active" aria-current="page"><?= esc(lang('Site.news')) ?></li>
             </ol>
         </nav>
     </div>
@@ -39,14 +39,14 @@
                                             <a href="<?= base_url('tin-tuc/' . esc($news['slug'])) ?>"><?= esc($news['title']) ?></a>
                                         </h3>
                                         <p class="text-muted small"><?= esc($news['summary']) ?></p>
-                                        <a href="<?= base_url('tin-tuc/' . esc($news['slug'])) ?>" class="btn btn-link text-primary p-0 text-decoration-none fw-bold small">Đọc Tiếp <i class="bi bi-arrow-right"></i></a>
+                                        <a href="<?= base_url('tin-tuc/' . esc($news['slug'])) ?>" class="btn btn-link text-primary p-0 text-decoration-none fw-bold small"><?= esc(lang('Site.read_more')) ?> <i class="bi bi-arrow-right"></i></a>
                                     </div>
                                 </div>
                             </div>
                         <?php endforeach; ?>
                     <?php else: ?>
                         <div class="col-12 text-center py-5">
-                            <p class="text-muted">Đang cập nhật các bài viết mới...</p>
+                            <p class="text-muted"><?= esc(lang('Site.updating_news')) ?></p>
                         </div>
                     <?php endif; ?>
                 </div>
@@ -60,7 +60,7 @@
             <!-- News Sidebar -->
             <div class="col-lg-4">
                 <div class="card border-0 shadow-sm rounded-4 p-4 bg-light mb-4" data-aos="fade-left">
-                    <h4 class="fw-bold mb-3 border-bottom pb-2">Danh Mục Tin Tức</h4>
+                    <h4 class="fw-bold mb-3 border-bottom pb-2"><?= esc(lang('Site.news_categories')) ?></h4>
                     <ul class="list-unstyled">
                         <?php if (!empty($categories)): ?>
                             <?php foreach ($categories as $cat): ?>
@@ -71,16 +71,16 @@
                                 </li>
                             <?php endforeach; ?>
                         <?php else: ?>
-                            <li class="text-muted small">Chưa có danh mục nào.</li>
+                            <li class="text-muted small"><?= esc(lang('Site.no_categories')) ?></li>
                         <?php endif; ?>
                     </ul>
                 </div>
                 
                 <div class="card border-0 shadow-sm rounded-4 p-4 bg-primary text-white text-center" data-aos="fade-left">
-                    <h4 class="fw-bold mb-3">Nhận Bản Tin</h4>
-                    <p class="text-white-50 small mb-4">Đăng ký để nhận các thông tin tin tức, ưu đãi phòng nghỉ và cập nhật công trình mới nhất từ Việt Lệ Thanh.</p>
+                    <h4 class="fw-bold mb-3"><?= esc(lang('Site.subscribe_newsletter')) ?></h4>
+                    <p class="text-white-50 small mb-4"><?= esc(lang('Site.subscribe_newsletter_desc')) ?></p>
                     <form action="#" class="d-flex gap-2">
-                        <input type="email" class="form-control rounded-pill border-0" placeholder="Email của bạn" required>
+                        <input type="email" class="form-control rounded-pill border-0" placeholder="<?= esc(lang('Site.your_email')) ?>" required>
                         <button type="submit" class="btn btn-light rounded-pill px-3"><i class="bi bi-send-fill text-primary"></i></button>
                     </form>
                 </div>

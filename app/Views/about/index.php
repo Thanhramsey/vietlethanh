@@ -2,6 +2,43 @@
 
 <?= $this->section('content') ?>
 
+<?php
+$heroLabel = get_setting('about_hero_label', 'Về Chúng Tôi');
+$heroTitle = get_setting('about_hero_title', 'Công ty TNHH MTV Việt Lệ Thanh');
+$heroSub = get_setting('about_hero_sub', 'Uy tín — Chất lượng — Tận tâm phục vụ từ năm 2017 tại Gia Lai');
+
+$statYear = get_setting('about_stat_year', '2017');
+$statExp = get_setting('about_stat_exp', '7+');
+$statSectors = get_setting('about_stat_sectors', '3');
+$statQuality = get_setting('about_stat_quality', '100%');
+
+$storyHeading = get_setting('about_story_heading', 'Hành Trình Phát Triển & Khẳng Định Uy Tín');
+$storyIntro = get_setting('about_story_intro', 'Được thành lập năm 2017 tại huyện Đức Cơ, Công ty TNHH MTV Việt Lệ Thanh đã vươn lên trở thành doanh nghiệp đa ngành uy tín hàng đầu khu vực cửa khẩu Tây Nguyên.');
+$storyBody1 = get_setting('about_story_body1', 'Khởi nghiệp từ dịch vụ lưu trú, đáp ứng nhu cầu của du khách và doanh nhân công tác tại Đức Cơ — khu kinh tế cửa khẩu sầm uất nhất Gia Lai. Với phương châm "Khách hàng là thượng đế", cơ sở liên tục được đầu tư nâng cấp.');
+$storyBody2 = get_setting('about_story_body2', 'Song song đó, nhận thấy tiềm năng phát triển hạ tầng và nông nghiệp tại Tây Nguyên, công ty mạnh dạn mở rộng đầu tư vào thi công đường bộ giao thông nông thôn và mô hình chăn nuôi trâu, bò, heo hữu cơ khép kín.');
+
+$companyInfos = [
+    ['icon' => 'bi-building-fill', 'label' => lang('Site.full_name'), 'value' => get_setting('about_company_name_vi', 'CÔNG TY TNHH MỘT THÀNH VIÊN VIỆT LỆ THANH')],
+    ['icon' => 'bi-globe', 'label' => lang('Site.international_name'), 'value' => get_setting('about_company_name_en', 'VIET LE THANH ONE MEMBER COMPANY LIMITED')],
+    ['icon' => 'bi-hash', 'label' => lang('Site.tax_code'), 'value' => get_setting('about_tax_code', '5901061783')],
+    ['icon' => 'bi-person-fill-check', 'label' => lang('Site.legal_representative'), 'value' => get_setting('about_legal_rep', 'NGUYỄN HỮU VIỆT')],
+    ['icon' => 'bi-calendar-event', 'label' => lang('Site.license_date'), 'value' => get_setting('about_license_date', '30/05/2017')],
+    ['icon' => 'bi-geo-alt-fill', 'label' => lang('Site.head_office'), 'value' => get_setting('about_address', '77 Quang Trung, khu phố II, Thị trấn Chư Ty, Huyện Đức Cơ, Tỉnh Gia Lai')],
+];
+
+$vision = get_setting('about_vision', 'Trở thành biểu tượng uy tín hàng đầu tại Đức Cơ — Gia Lai trong lĩnh vực dịch vụ lưu trú chất lượng cao, đồng thời là nhà thầu thi công hạ tầng giao thông tin cậy của tỉnh nhà.');
+$mission = get_setting('about_mission', 'Cung cấp giải pháp lưu trú ấm cúng, an toàn; xây dựng những tuyến đường giao thông bền vững thúc đẩy giao thương biên giới; cung cấp thực phẩm sạch từ nông nghiệp hữu cơ cho cộng đồng.');
+$valuesRaw = get_setting('about_values', "Chất lượng: Đảm bảo tuyệt đối ở mọi dịch vụ\nTận tâm: Luôn đặt khách hàng là trung tâm\nTrách nhiệm: Đóng góp tích cực cho địa phương");
+$valueLines = array_values(array_filter(array_map('trim', preg_split('/\r\n|\r|\n/', (string) $valuesRaw))));
+if (empty($valueLines)) {
+    $valueLines = [
+        'Chất lượng: Đảm bảo tuyệt đối ở mọi dịch vụ',
+        'Tận tâm: Luôn đặt khách hàng là trung tâm',
+        'Trách nhiệm: Đóng góp tích cực cho địa phương',
+    ];
+}
+?>
+
 <!-- ===================== PAGE HERO BANNER ===================== -->
 <div class="about-hero-banner">
     <div class="about-hero-overlay"></div>
@@ -11,13 +48,13 @@
     <div class="about-hero-deco deco-3"></div>
     <div class="container position-relative" style="z-index:2;">
         <div data-aos="fade-up" data-aos-duration="900">
-            <span class="about-hero-label"><i class="bi bi-building me-2"></i>Về Chúng Tôi</span>
-            <h1 class="about-hero-title">Công ty TNHH MTV<br><span class="about-hero-highlight">Việt Lệ Thanh</span></h1>
-            <p class="about-hero-sub">Uy tín — Chất lượng — Tận tâm phục vụ từ năm 2017 tại Gia Lai</p>
+            <span class="about-hero-label"><i class="bi bi-building me-2"></i><?= esc($heroLabel) ?></span>
+            <h1 class="about-hero-title"><?= nl2br(esc($heroTitle)) ?></h1>
+            <p class="about-hero-sub"><?= esc($heroSub) ?></p>
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb justify-content-center">
-                    <li class="breadcrumb-item"><a href="<?= base_url() ?>">Trang chủ</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Giới thiệu</li>
+                    <li class="breadcrumb-item"><a href="<?= base_url() ?>"><?= esc(lang('Site.home')) ?></a></li>
+                    <li class="breadcrumb-item active" aria-current="page"><?= esc(lang('Site.about')) ?></li>
                 </ol>
             </nav>
         </div>
@@ -35,26 +72,26 @@
         <div class="row g-0">
             <div class="col-6 col-md-3" data-aos="zoom-in" data-aos-delay="0">
                 <div class="stat-item">
-                    <div class="stat-number" data-count="2017">2017</div>
-                    <div class="stat-label">Năm thành lập</div>
+                    <div class="stat-number" data-count="<?= esc(preg_replace('/\D+/', '', (string) $statYear) ?: '0') ?>"><?= esc($statYear) ?></div>
+                    <div class="stat-label"><?= esc(lang('Site.founded_year')) ?></div>
                 </div>
             </div>
             <div class="col-6 col-md-3" data-aos="zoom-in" data-aos-delay="100">
                 <div class="stat-item">
-                    <div class="stat-number" data-count="7">7+</div>
-                    <div class="stat-label">Năm kinh nghiệm</div>
+                    <div class="stat-number" data-count="<?= esc(preg_replace('/\D+/', '', (string) $statExp) ?: '0') ?>"><?= esc($statExp) ?></div>
+                    <div class="stat-label"><?= esc(lang('Site.years_experience')) ?></div>
                 </div>
             </div>
             <div class="col-6 col-md-3" data-aos="zoom-in" data-aos-delay="200">
                 <div class="stat-item">
-                    <div class="stat-number" data-count="3">3</div>
-                    <div class="stat-label">Lĩnh vực hoạt động</div>
+                    <div class="stat-number" data-count="<?= esc(preg_replace('/\D+/', '', (string) $statSectors) ?: '0') ?>"><?= esc($statSectors) ?></div>
+                    <div class="stat-label"><?= esc(lang('Site.business_sectors')) ?></div>
                 </div>
             </div>
             <div class="col-6 col-md-3" data-aos="zoom-in" data-aos-delay="300">
                 <div class="stat-item">
-                    <div class="stat-number" data-count="100">100%</div>
-                    <div class="stat-label">Cam kết chất lượng</div>
+                    <div class="stat-number" data-count="<?= esc(preg_replace('/\D+/', '', (string) $statQuality) ?: '0') ?>"><?= esc($statQuality) ?></div>
+                    <div class="stat-label"><?= esc(lang('Site.quality_commitment')) ?></div>
                 </div>
             </div>
         </div>
@@ -89,41 +126,41 @@
 
             <!-- Text side -->
             <div class="col-lg-6" data-aos="fade-left" data-aos-duration="900">
-                <span class="section-eyebrow"><i class="bi bi-building me-2"></i>Câu chuyện của chúng tôi</span>
-                <h2 class="section-title-left mb-4">Hành Trình Phát Triển & Khẳng Định Uy Tín</h2>
-                <p class="lead text-muted">Được thành lập năm 2017 tại huyện Đức Cơ, <strong class="text-dark">Công ty TNHH MTV Việt Lệ Thanh</strong> đã vươn lên trở thành doanh nghiệp đa ngành uy tín hàng đầu khu vực cửa khẩu Tây Nguyên.</p>
-                <p class="text-muted">Khởi nghiệp từ dịch vụ lưu trú, đáp ứng nhu cầu của du khách và doanh nhân công tác tại Đức Cơ — khu kinh tế cửa khẩu sầm uất nhất Gia Lai. Với phương châm <em>"Khách hàng là thượng đế"</em>, cơ sở liên tục được đầu tư nâng cấp.</p>
-                <p class="text-muted">Song song đó, nhận thấy tiềm năng phát triển hạ tầng và nông nghiệp tại Tây Nguyên, công ty mạnh dạn mở rộng đầu tư vào thi công đường bộ giao thông nông thôn và mô hình chăn nuôi trâu, bò, heo hữu cơ khép kín.</p>
+                <span class="section-eyebrow"><i class="bi bi-building me-2"></i><?= esc(lang('Site.our_story')) ?></span>
+                <h2 class="section-title-left mb-4"><?= esc($storyHeading) ?></h2>
+                <p class="lead text-muted"><?= esc($storyIntro) ?></p>
+                <p class="text-muted"><?= esc($storyBody1) ?></p>
+                <p class="text-muted"><?= esc($storyBody2) ?></p>
 
                 <!-- Feature list -->
                 <div class="row g-3 mt-2">
                     <div class="col-sm-6">
                         <div class="about-feat-item">
                             <i class="bi bi-house-heart-fill text-primary"></i>
-                            <span>Lưu trú ngắn ngày</span>
+                            <span><?= esc(lang('Site.short_stay_service')) ?></span>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="about-feat-item">
                             <i class="bi bi-hammer text-primary"></i>
-                            <span>Thi công hạ tầng</span>
+                            <span><?= esc(lang('Site.infrastructure_construction')) ?></span>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="about-feat-item">
                             <i class="bi bi-tree-fill text-primary"></i>
-                            <span>Nông nghiệp hữu cơ</span>
+                            <span><?= esc(lang('Site.organic_agriculture')) ?></span>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="about-feat-item">
                             <i class="bi bi-shield-fill-check text-primary"></i>
-                            <span>Phục vụ 24/7</span>
+                            <span><?= esc(lang('Site.service_247')) ?></span>
                         </div>
                     </div>
                 </div>
                 <a href="<?= base_url('lien-he') ?>" class="btn btn-primary btn-custom rounded-pill mt-4">
-                    <i class="bi bi-chat-dots me-1"></i> Liên Hệ Tư Vấn
+                    <i class="bi bi-chat-dots me-1"></i> <?= esc(lang('Site.contact_consultation')) ?>
                 </a>
             </div>
         </div>
@@ -137,20 +174,12 @@
     <div style="position:absolute;width:400px;height:400px;border-radius:50%;border:1px solid rgba(255,255,255,0.07);bottom:-100px;left:-100px;"></div>
     <div class="container position-relative" style="z-index:1;">
         <div class="text-center mb-5" data-aos="fade-up">
-            <span class="section-eyebrow" style="color:rgba(255,255,255,0.7)"><i class="bi bi-file-earmark-text me-2"></i>Thông Tin Pháp Lý</span>
-            <h2 class="section-title text-white">Thông Tin Đăng Ký Doanh Nghiệp</h2>
+            <span class="section-eyebrow" style="color:rgba(255,255,255,0.7)"><i class="bi bi-file-earmark-text me-2"></i><?= esc(lang('Site.legal_information')) ?></span>
+            <h2 class="section-title text-white"><?= esc(lang('Site.business_registration_info')) ?></h2>
         </div>
         <div class="row g-4">
             <?php
-            $infos = [
-                ['icon'=>'bi-building-fill',    'label'=>'Tên đầy đủ',             'value'=>'CÔNG TY TNHH MỘT THÀNH VIÊN VIỆT LỆ THANH'],
-                ['icon'=>'bi-globe',             'label'=>'Tên quốc tế',            'value'=>'VIET LE THANH ONE MEMBER COMPANY LIMITED'],
-                ['icon'=>'bi-hash',              'label'=>'Mã số thuế',             'value'=>'5901061783'],
-                ['icon'=>'bi-person-fill-check', 'label'=>'Đại diện pháp luật',    'value'=>'NGUYỄN HỮU VIỆT'],
-                ['icon'=>'bi-calendar-event',    'label'=>'Ngày cấp phép',          'value'=>'30/05/2017'],
-                ['icon'=>'bi-geo-alt-fill',      'label'=>'Trụ sở chính',           'value'=>'77 Quang Trung, khu phố II, Thị trấn Chư Ty, Huyện Đức Cơ, Tỉnh Gia Lai'],
-            ];
-            foreach ($infos as $i => $info):
+            foreach ($companyInfos as $i => $info):
             ?>
             <div class="col-md-6" data-aos="fade-up" data-aos-delay="<?= $i * 80 ?>">
                 <div class="about-info-card">
@@ -172,8 +201,8 @@
 <section class="section-padding bg-light-gray">
     <div class="container">
         <div class="text-center mb-5" data-aos="fade-up">
-            <span class="section-eyebrow"><i class="bi bi-stars me-2"></i>Định hướng phát triển</span>
-            <h2 class="section-title">Tầm Nhìn — Sứ Mệnh — Giá Trị</h2>
+            <span class="section-eyebrow"><i class="bi bi-stars me-2"></i><?= esc(lang('Site.development_orientation')) ?></span>
+            <h2 class="section-title"><?= esc(lang('Site.vision_mission_values')) ?></h2>
         </div>
         <div class="row g-4">
             <!-- Tầm nhìn -->
@@ -183,8 +212,8 @@
                         <i class="bi bi-eye-fill"></i>
                     </div>
                     <div class="vmv-number">01</div>
-                    <h4 class="vmv-title">Tầm Nhìn</h4>
-                    <p class="vmv-text">Trở thành biểu tượng uy tín hàng đầu tại Đức Cơ — Gia Lai trong lĩnh vực dịch vụ lưu trú chất lượng cao, đồng thời là nhà thầu thi công hạ tầng giao thông tin cậy của tỉnh nhà.</p>
+                    <h4 class="vmv-title"><?= esc(lang('Site.vision')) ?></h4>
+                    <p class="vmv-text"><?= esc($vision) ?></p>
                     <div class="vmv-line"></div>
                 </div>
             </div>
@@ -195,8 +224,8 @@
                         <i class="bi bi-compass-fill"></i>
                     </div>
                     <div class="vmv-number">02</div>
-                    <h4 class="vmv-title">Sứ Mệnh</h4>
-                    <p class="vmv-text">Cung cấp giải pháp lưu trú ấm cúng, an toàn; xây dựng những tuyến đường giao thông bền vững thúc đẩy giao thương biên giới; cung cấp thực phẩm sạch từ nông nghiệp hữu cơ cho cộng đồng.</p>
+                    <h4 class="vmv-title"><?= esc(lang('Site.mission')) ?></h4>
+                    <p class="vmv-text"><?= esc($mission) ?></p>
                     <div class="vmv-line"></div>
                 </div>
             </div>
@@ -207,11 +236,23 @@
                         <i class="bi bi-award-fill"></i>
                     </div>
                     <div class="vmv-number">03</div>
-                    <h4 class="vmv-title">Giá Trị Cốt Lõi</h4>
+                    <h4 class="vmv-title"><?= esc(lang('Site.core_values')) ?></h4>
                     <ul class="vmv-list">
-                        <li><i class="bi bi-check-circle-fill"></i> <strong>Chất lượng:</strong> Đảm bảo tuyệt đối ở mọi dịch vụ</li>
-                        <li><i class="bi bi-check-circle-fill"></i> <strong>Tận tâm:</strong> Luôn đặt khách hàng là trung tâm</li>
-                        <li><i class="bi bi-check-circle-fill"></i> <strong>Trách nhiệm:</strong> Đóng góp tích cực cho địa phương</li>
+                        <?php foreach ($valueLines as $line): ?>
+                            <?php
+                            $parts = explode(':', $line, 2);
+                            $head = trim($parts[0]);
+                            $tail = trim($parts[1] ?? '');
+                            ?>
+                            <li>
+                                <i class="bi bi-check-circle-fill"></i>
+                                <?php if ($tail !== ''): ?>
+                                    <strong><?= esc($head) ?>:</strong> <?= esc($tail) ?>
+                                <?php else: ?>
+                                    <?= esc($line) ?>
+                                <?php endif; ?>
+                            </li>
+                        <?php endforeach; ?>
                     </ul>
                     <div class="vmv-line"></div>
                 </div>
@@ -220,12 +261,67 @@
     </div>
 </section>
 
+<!-- ===================== TIMELINE SECTION ===================== -->
+<section class="section-padding timeline-section">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <span class="section-eyebrow"><i class="bi bi-clock-history me-2"></i><?= esc(lang('Site.development_history')) ?></span>
+            <h2 class="section-title"><?= esc(lang('Site.vlt_timeline')) ?></h2>
+        </div>
+
+        <?php if (!empty($milestones)): ?>
+            <div class="timeline-shell" data-aos="fade-up" data-aos-delay="80">
+                <div class="timeline-years" role="tablist" aria-label="Các mốc thời gian">
+                    <?php foreach ($milestones as $idx => $m): ?>
+                        <button
+                            type="button"
+                            class="timeline-year-btn<?= $idx === 0 ? ' active' : '' ?>"
+                            data-target="timeline-item-<?= (int) $m['id'] ?>"
+                            aria-selected="<?= $idx === 0 ? 'true' : 'false' ?>">
+                            <span class="dot"></span>
+                            <span class="year-text"><?= esc($m['year']) ?></span>
+                        </button>
+                    <?php endforeach; ?>
+                </div>
+
+                <div class="timeline-details-wrap">
+                    <?php foreach ($milestones as $idx => $m): ?>
+                        <article
+                            id="timeline-item-<?= (int) $m['id'] ?>"
+                            class="timeline-detail<?= $idx === 0 ? ' active' : '' ?>"
+                            role="tabpanel"
+                            <?= $idx === 0 ? '' : 'hidden' ?>>
+                            <div class="timeline-detail-grid">
+                                <div class="timeline-detail-content">
+                                    <div class="timeline-chip"><?= esc(lang('Site.milestone_year')) ?> <?= esc($m['year']) ?></div>
+                                    <h3 class="timeline-title"><?= esc($m['title']) ?></h3>
+                                    <p class="timeline-description"><?= nl2br(esc($m['description'] ?? '')) ?></p>
+                                </div>
+                                <div class="timeline-detail-media">
+                                    <?php if (!empty($m['image'])): ?>
+                                        <img src="<?= base_url('uploads/milestones/' . $m['image']) ?>" alt="<?= esc($m['title']) ?>">
+                                    <?php else: ?>
+                                        <div class="timeline-media-placeholder">
+                                            <i class="bi bi-image"></i>
+                                            <span><?= esc(lang('Site.no_image_for_milestone')) ?></span>
+                                        </div>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        </article>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        <?php endif; ?>
+    </div>
+</section>
+
 <!-- ===================== 3 CORE SECTORS ===================== -->
 <section class="section-padding">
     <div class="container">
         <div class="text-center mb-5" data-aos="fade-up">
-            <span class="section-eyebrow"><i class="bi bi-grid-3x3-gap me-2"></i>Lĩnh vực hoạt động</span>
-            <h2 class="section-title">Ba Trụ Cột Phát Triển</h2>
+            <span class="section-eyebrow"><i class="bi bi-grid-3x3-gap me-2"></i><?= esc(lang('Site.business_sectors')) ?></span>
+            <h2 class="section-title"><?= esc(lang('Site.three_development_pillars')) ?></h2>
         </div>
         <div class="row g-4">
             <div class="col-md-4" data-aos="fade-up" data-aos-delay="0">
@@ -233,9 +329,9 @@
                     <div class="sector-icon-ring">
                         <i class="bi bi-house-heart-fill"></i>
                     </div>
-                    <h4>Lưu Trú Ngắn Ngày</h4>
+                    <h4><?= esc(lang('Site.short_stay_service')) ?></h4>
                     <p>Hệ thống phòng nghỉ tiện nghi, sạch sẽ và an toàn dành cho du khách và doanh nhân công tác tại Đức Cơ — cửa khẩu giao thương quốc tế sầm uất.</p>
-                    <a href="<?= base_url('dich-vu') ?>" class="sector-link">Xem chi tiết <i class="bi bi-arrow-right"></i></a>
+                    <a href="<?= base_url('dich-vu') ?>" class="sector-link"><?= esc(lang('Site.view_detail')) ?> <i class="bi bi-arrow-right"></i></a>
                 </div>
             </div>
             <div class="col-md-4" data-aos="fade-up" data-aos-delay="150">
@@ -243,9 +339,9 @@
                     <div class="sector-icon-ring">
                         <i class="bi bi-hammer"></i>
                     </div>
-                    <h4>Xây Dựng Hạ Tầng</h4>
+                    <h4><?= esc(lang('Site.infrastructure_construction')) ?></h4>
                     <p>Chuyên thi công các tuyến đường giao thông nông thôn, cầu cống và công trình dân dụng với tiêu chuẩn kỹ thuật cao, đảm bảo tiến độ và chất lượng.</p>
-                    <a href="<?= base_url('dich-vu') ?>" class="sector-link">Xem chi tiết <i class="bi bi-arrow-right"></i></a>
+                    <a href="<?= base_url('dich-vu') ?>" class="sector-link"><?= esc(lang('Site.view_detail')) ?> <i class="bi bi-arrow-right"></i></a>
                 </div>
             </div>
             <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
@@ -253,9 +349,9 @@
                     <div class="sector-icon-ring">
                         <i class="bi bi-tree-fill"></i>
                     </div>
-                    <h4>Trang Trại Hữu Cơ</h4>
+                    <h4><?= esc(lang('Site.organic_farm')) ?></h4>
                     <p>Mô hình chăn nuôi trâu, bò, heo hữu cơ khép kín theo hướng bền vững, cung cấp thực phẩm sạch an toàn cho cộng đồng địa phương và khu vực.</p>
-                    <a href="<?= base_url('dich-vu') ?>" class="sector-link">Xem chi tiết <i class="bi bi-arrow-right"></i></a>
+                    <a href="<?= base_url('dich-vu') ?>" class="sector-link"><?= esc(lang('Site.view_detail')) ?> <i class="bi bi-arrow-right"></i></a>
                 </div>
             </div>
         </div>
@@ -616,13 +712,163 @@
     padding: 48px 52px;
     box-shadow: 0 20px 60px rgba(30,60,114,0.3);
 }
+
+/* ===== TIMELINE SECTION ===== */
+.timeline-section {
+    background: linear-gradient(180deg, #f8fbff 0%, #eef5ff 100%);
+}
+.timeline-shell {
+    background: #fff;
+    border-radius: 24px;
+    padding: 32px;
+    box-shadow: 0 18px 45px rgba(15, 32, 68, 0.08);
+}
+.timeline-years {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 10px 6px 16px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid #e5edf8;
+}
+.timeline-year-btn {
+    border: 1px solid #d7e3f4;
+    background: #f7faff;
+    border-radius: 999px;
+    padding: 10px 16px;
+    font-weight: 700;
+    color: #27406b;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+.timeline-year-btn .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #8ea6cc;
+}
+.timeline-year-btn.active,
+.timeline-year-btn:hover {
+    background: var(--primary-color);
+    color: #fff;
+    border-color: var(--primary-color);
+}
+.timeline-year-btn.active .dot,
+.timeline-year-btn:hover .dot {
+    background: #fff;
+}
+.timeline-detail {
+    display: none;
+}
+.timeline-detail.active {
+    display: block;
+    animation: fadeInTimeline 0.25s ease;
+}
+@keyframes fadeInTimeline {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.timeline-detail-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 24px;
+    align-items: stretch;
+}
+.timeline-chip {
+    display: inline-block;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    color: var(--primary-color);
+    background: rgba(30, 60, 114, 0.1);
+    border-radius: 999px;
+    padding: 6px 12px;
+    margin-bottom: 10px;
+}
+.timeline-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #1a2b49;
+    margin-bottom: 14px;
+}
+.timeline-description {
+    color: #5c6b84;
+    line-height: 1.8;
+    margin-bottom: 0;
+}
+.timeline-detail-media {
+    min-height: 260px;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #f3f7ff;
+    border: 1px solid #d8e5f6;
+}
+.timeline-detail-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+.timeline-media-placeholder {
+    min-height: 260px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    color: #8ba0bf;
+    font-weight: 600;
+}
+.timeline-media-placeholder i {
+    font-size: 2rem;
+}
 @media (max-width: 768px) {
     .about-img-placeholder { height: 280px; }
     .about-img-years { top: -10px; left: -10px; }
     .about-cta-inner { padding: 32px 24px; }
     .stat-item { padding: 20px 10px; }
     .stat-number { font-size: 1.8rem; }
+    .timeline-shell { padding: 18px; }
+    .timeline-detail-grid { grid-template-columns: 1fr; }
 }
 </style>
+
+<?php if (!empty($milestones)): ?>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const buttons = document.querySelectorAll('.timeline-year-btn');
+    const details = document.querySelectorAll('.timeline-detail');
+
+    function activate(targetId, clickedBtn) {
+        buttons.forEach((btn) => {
+            const isActive = btn === clickedBtn;
+            btn.classList.toggle('active', isActive);
+            btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+        });
+
+        details.forEach((panel) => {
+            const isActive = panel.id === targetId;
+            panel.classList.toggle('active', isActive);
+            if (isActive) {
+                panel.removeAttribute('hidden');
+            } else {
+                panel.setAttribute('hidden', 'hidden');
+            }
+        });
+    }
+
+    buttons.forEach((btn) => {
+        btn.addEventListener('click', function () {
+            activate(this.dataset.target, this);
+        });
+    });
+});
+</script>
+<?php endif; ?>
 
 <?= $this->endSection() ?>

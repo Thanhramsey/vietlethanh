@@ -1,4 +1,12 @@
 <!-- Top Bar -->
+<?php
+$currentLocale = service('request')->getLocale();
+$switchRedirect = current_url();
+$langViUrl = base_url('lang/vi?redirect=' . urlencode($switchRedirect));
+$langEnUrl = base_url('lang/en?redirect=' . urlencode($switchRedirect));
+$currentLangLabel = $currentLocale === 'vi' ? 'VN' : 'EN';
+$currentFlagUrl = $currentLocale === 'vi' ? 'https://flagcdn.com/w20/vn.png' : 'https://flagcdn.com/w20/gb.png';
+?>
 <div class="bg-primary text-white py-2 d-none d-lg-block">
     <div class="container">
         <div class="row align-items-center">
@@ -6,7 +14,7 @@
                 <span class="me-3"><i class="bi bi-geo-alt-fill me-1"></i> <?= esc(get_setting('address')) ?></span>
             </div>
             <div class="col-md-4 text-end small">
-                <span class="me-3"><i class="bi bi-telephone-fill me-1"></i> Hotline: <?= esc(get_setting('phone')) ?></span>
+                <span class="me-3"><i class="bi bi-telephone-fill me-1"></i> <?= esc(lang('Site.hotline')) ?>: <?= esc(get_setting('phone')) ?></span>
                 <span><i class="bi bi-clock-fill me-1"></i> <?= esc(get_setting('working_hours', '24/7')) ?></span>
             </div>
         </div>
@@ -40,10 +48,10 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link <?= (uri_string() == '') ? 'active' : '' ?>" href="<?= base_url() ?>">Trang Chủ</a>
+                        <a class="nav-link <?= (uri_string() == '') ? 'active' : '' ?>" href="<?= base_url() ?>"><?= esc(lang('Site.home')) ?></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?= (uri_string() == 'gioi-thieu') ? 'active' : '' ?>" href="<?= base_url('gioi-thieu') ?>">Giới Thiệu</a>
+                        <a class="nav-link <?= (uri_string() == 'gioi-thieu') ? 'active' : '' ?>" href="<?= base_url('gioi-thieu') ?>"><?= esc(lang('Site.about')) ?></a>
                     </li>
 
                     <!-- Dịch Vụ Dropdown -->
@@ -53,10 +61,10 @@
                     ?>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle <?= (uri_string() == 'dich-vu' || strpos(uri_string(), 'dich-vu/') === 0) ? 'active' : '' ?>" href="<?= base_url('dich-vu') ?>" id="serviceDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Dịch Vụ
+                            <?= esc(lang('Site.services')) ?>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-animated" aria-labelledby="serviceDropdown">
-                            <li><a class="dropdown-item" href="<?= base_url('dich-vu') ?>"><i class="bi bi-grid-3x3-gap me-2 text-primary"></i>Tất cả dịch vụ</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('dich-vu') ?>"><i class="bi bi-grid-3x3-gap me-2 text-primary"></i><?= esc(lang('Site.all_services')) ?></a></li>
                             <?php if (!empty($navServices)): ?>
                                 <li><hr class="dropdown-divider"></li>
                                 <?php foreach ($navServices as $svc): ?>
@@ -71,7 +79,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link <?= (uri_string() == 'thu-vien') ? 'active' : '' ?>" href="<?= base_url('thu-vien') ?>">Thư Viện Ảnh</a>
+                        <a class="nav-link <?= (uri_string() == 'thu-vien') ? 'active' : '' ?>" href="<?= base_url('thu-vien') ?>"><?= esc(lang('Site.gallery')) ?></a>
                     </li>
 
                     <!-- Tin Tức Dropdown -->
@@ -81,10 +89,10 @@
                     ?>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle <?= (uri_string() == 'tin-tuc' || strpos(uri_string(), 'tin-tuc/') === 0) ? 'active' : '' ?>" href="<?= base_url('tin-tuc') ?>" id="newsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Tin Tức
+                            <?= esc(lang('Site.news')) ?>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-animated" aria-labelledby="newsDropdown">
-                            <li><a class="dropdown-item" href="<?= base_url('tin-tuc') ?>"><i class="bi bi-newspaper me-2 text-primary"></i>Tất cả tin tức</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('tin-tuc') ?>"><i class="bi bi-newspaper me-2 text-primary"></i><?= esc(lang('Site.all_news')) ?></a></li>
                             <?php if (!empty($navCategories)): ?>
                                 <li><hr class="dropdown-divider"></li>
                                 <?php foreach ($navCategories as $cat): ?>
@@ -98,12 +106,53 @@
                         </ul>
                     </li>
 
+                    <?php
+                    $navDocCategories = [];
+                    try {
+                        $navDocCatModel = new \App\Models\DocumentCategoryModel();
+                        $navDocCategories = $navDocCatModel->where('status', 1)->orderBy('sort_order', 'ASC')->findAll();
+                    } catch (\Throwable $e) {
+                        $navDocCategories = [];
+                    }
+                    ?>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle <?= (uri_string() == 'giay-to' || strpos(uri_string(), 'giay-to/') === 0) ? 'active' : '' ?>" href="<?= base_url('giay-to') ?>" id="documentDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <?= esc(lang('Site.documents')) ?>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-animated" aria-labelledby="documentDropdown">
+                            <li><a class="dropdown-item" href="<?= base_url('giay-to') ?>"><i class="bi bi-files me-2 text-primary"></i><?= esc(lang('Site.all_documents')) ?></a></li>
+                            <?php if (!empty($navDocCategories)): ?>
+                                <li><hr class="dropdown-divider"></li>
+                                <?php foreach ($navDocCategories as $cat): ?>
+                                    <li><a class="dropdown-item" href="<?= base_url('giay-to/loai/' . $cat['slug']) ?>"><i class="bi bi-chevron-right me-2 text-primary" style="font-size:0.75rem;"></i><?= esc($cat['title']) ?></a></li>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                        </ul>
+                    </li>
+
                     <li class="nav-item">
-                        <a class="nav-link <?= (uri_string() == 'lien-he') ? 'active' : '' ?>" href="<?= base_url('lien-he') ?>">Liên Hệ</a>
+                        <a class="nav-link <?= (uri_string() == 'lien-he') ? 'active' : '' ?>" href="<?= base_url('lien-he') ?>"><?= esc(lang('Site.contact')) ?></a>
                     </li>
                 </ul>
-                <div class="ms-lg-3 d-grid d-lg-block">
-                    <a href="<?= base_url('lien-he') ?>" class="btn btn-primary btn-custom rounded-pill text-nowrap"><i class="bi bi-chat-dots-fill me-1"></i> Tư Vấn Ngay</a>
+                <div class="dropdown ms-lg-2 me-lg-2 mb-2 mb-lg-0">
+                    <button class="btn btn-outline-secondary btn-sm dropdown-toggle d-inline-flex align-items-center gap-2" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="min-width:92px;">
+                        <img src="<?= esc($currentFlagUrl) ?>" alt="<?= esc($currentLangLabel) ?>" style="width:18px;height:12px;object-fit:cover;border-radius:2px;">
+                        <span><?= esc($currentLangLabel) ?></span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center gap-2 <?= $currentLocale === 'vi' ? 'active' : '' ?>" href="<?= esc($langViUrl) ?>">
+                                <img src="https://flagcdn.com/w20/vn.png" alt="VN" style="width:18px;height:12px;object-fit:cover;border-radius:2px;">
+                                <span>VN</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center gap-2 <?= $currentLocale === 'en' ? 'active' : '' ?>" href="<?= esc($langEnUrl) ?>">
+                                <img src="https://flagcdn.com/w20/gb.png" alt="EN" style="width:18px;height:12px;object-fit:cover;border-radius:2px;">
+                                <span>EN</span>
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>

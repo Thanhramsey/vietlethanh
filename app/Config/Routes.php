@@ -5,6 +5,7 @@ use CodeIgniter\Router\RouteCollection;
 /** @var RouteCollection $routes */
 
 // Frontend Routes
+$routes->get('lang/(:segment)', 'Language::switch/$1');
 $routes->get('/', 'Home::index');
 $routes->get('gioi-thieu', 'About::index');
 $routes->get('dich-vu', 'Service::index');
@@ -13,6 +14,8 @@ $routes->get('thu-vien', 'Gallery::index');
 $routes->get('tin-tuc', 'News::index');
 $routes->get('tin-tuc/danh-muc/(:segment)', 'News::category/$1');
 $routes->get('tin-tuc/(:segment)', 'News::show/$1');
+$routes->get('giay-to', 'Document::index');
+$routes->get('giay-to/loai/(:segment)', 'Document::index/$1');
 $routes->get('lien-he', 'Contact::index');
 $routes->post('lien-he/gui', 'Contact::submit');
 
@@ -34,6 +37,10 @@ $routes->group('admin', function($routes) {
     // Settings
     $routes->get('settings', 'Admin\Setting::index');
     $routes->post('settings/save', 'Admin\Setting::save');
+    $routes->post('settings/partners/store', 'Admin\Setting::storePartner');
+    $routes->post('settings/partners/update/(:num)', 'Admin\Setting::updatePartner/$1');
+    $routes->post('settings/partners/toggle/(:num)', 'Admin\Setting::togglePartner/$1');
+    $routes->get('settings/partners/delete/(:num)', 'Admin\Setting::deletePartner/$1');
     
     // Banners CRUD
     $routes->get('banners', 'Admin\Banner::index');
@@ -82,6 +89,22 @@ $routes->group('admin', function($routes) {
     $routes->get('news-categories/edit/(:num)', 'Admin\NewsCategory::edit/$1');
     $routes->post('news-categories/update/(:num)', 'Admin\NewsCategory::update/$1');
     $routes->get('news-categories/delete/(:num)', 'Admin\NewsCategory::delete/$1');
+
+    // Document Categories CRUD
+    $routes->get('document-categories', 'Admin\DocumentCategory::index');
+    $routes->get('document-categories/create', 'Admin\DocumentCategory::create');
+    $routes->post('document-categories/store', 'Admin\DocumentCategory::store');
+    $routes->get('document-categories/edit/(:num)', 'Admin\DocumentCategory::edit/$1');
+    $routes->post('document-categories/update/(:num)', 'Admin\DocumentCategory::update/$1');
+    $routes->get('document-categories/delete/(:num)', 'Admin\DocumentCategory::delete/$1');
+
+    // Documents CRUD
+    $routes->get('documents', 'Admin\Document::index');
+    $routes->get('documents/create', 'Admin\Document::create');
+    $routes->post('documents/store', 'Admin\Document::store');
+    $routes->get('documents/edit/(:num)', 'Admin\Document::edit/$1');
+    $routes->post('documents/update/(:num)', 'Admin\Document::update/$1');
+    $routes->get('documents/delete/(:num)', 'Admin\Document::delete/$1');
 
     // Gallery Albums CRUD
     $routes->get('gallery-albums', 'Admin\GalleryAlbum::index');

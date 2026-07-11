@@ -75,6 +75,16 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link <?= (strpos(uri_string(), 'admin/document-categories') === 0) ? 'active' : '' ?>" href="<?= base_url('admin/document-categories') ?>">
+                        <i class="bi bi-tags"></i> Loại Giấy Tờ
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link <?= (strpos(uri_string(), 'admin/documents') === 0) ? 'active' : '' ?>" href="<?= base_url('admin/documents') ?>">
+                        <i class="bi bi-file-earmark-text"></i> Quản Lý Giấy Tờ
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link <?= (uri_string() == 'admin/gallery') ? 'active' : '' ?>" href="<?= base_url('admin/gallery') ?>">
                         <i class="bi bi-image"></i> Thư Viện Ảnh
                     </a>
@@ -82,16 +92,6 @@
                 <li class="nav-item">
                     <a class="nav-link <?= (uri_string() == 'admin/gallery-albums') ? 'active' : '' ?>" href="<?= base_url('admin/gallery-albums') ?>">
                         <i class="bi bi-folder-symlink"></i> Album Ảnh
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link <?= (strpos(uri_string(), 'admin/about') === 0) ? 'active' : '' ?>" href="<?= base_url('admin/about') ?>">
-                        <i class="bi bi-info-circle"></i> Trang Giới Thiệu
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link <?= (strpos(uri_string(), 'admin/milestones') === 0) ? 'active' : '' ?>" href="<?= base_url('admin/milestones') ?>">
-                        <i class="bi bi-clock-history"></i> Lịch Sử Công Ty
                     </a>
                 </li>
                 <li class="nav-item mt-4 border-top border-secondary">

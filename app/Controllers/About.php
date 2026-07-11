@@ -9,7 +9,10 @@ class About extends BaseController
     public function index(): string
     {
         $milestoneModel = new MilestoneModel();
-        $milestones = $milestoneModel->orderBy('year', 'ASC')->findAll();
+        $milestones = $milestoneModel
+            ->orderBy('sort_order', 'ASC')
+            ->orderBy('year', 'ASC')
+            ->findAll();
 
         $data = [
             'seo_title'       => 'Giới thiệu về Công ty TNHH MTV Việt Lệ Thanh',

@@ -37,3 +37,43 @@ in SYSTEMPATH\HTTP\RequestTrait.php on line 367.
  8 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
  9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
 10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-07-11 04:24:41 --> TypeError: App\Controllers\Admin\About::index(): Return value must be of type string, CodeIgniter\HTTP\RedirectResponse returned
+[Method: GET, Route: admin/about]
+in APPPATH\Controllers\Admin\About.php on line 26.
+ 1 SYSTEMPATH\CodeIgniter.php(974): App\Controllers\Admin\About->index()
+ 2 SYSTEMPATH\CodeIgniter.php(520): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\About))
+ 3 SYSTEMPATH\CodeIgniter.php(363): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-07-11 04:25:05 --> TypeError: App\Controllers\Admin\About::index(): Return value must be of type string, CodeIgniter\HTTP\RedirectResponse returned
+[Method: GET, Route: admin/about]
+in APPPATH\Controllers\Admin\About.php on line 26.
+ 1 SYSTEMPATH\CodeIgniter.php(974): App\Controllers\Admin\About->index()
+ 2 SYSTEMPATH\CodeIgniter.php(520): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\About))
+ 3 SYSTEMPATH\CodeIgniter.php(363): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-07-11 04:35:07 --> TypeError: App\Controllers\Admin\About::index(): Return value must be of type string, CodeIgniter\HTTP\RedirectResponse returned
+[Method: GET, Route: admin/about]
+in APPPATH\Controllers\Admin\About.php on line 26.
+ 1 SYSTEMPATH\CodeIgniter.php(974): App\Controllers\Admin\About->index()
+ 2 SYSTEMPATH\CodeIgniter.php(520): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\About))
+ 3 SYSTEMPATH\CodeIgniter.php(363): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-07-11 05:00:24 --> ErrorException: finfo_file(C:\xampp\tmp\phpBDA8.tmp): Failed to open stream: No such file or directory
+[Method: POST, Route: admin/documents/store]
+in SYSTEMPATH\Files\File.php on line 136.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'finfo_file(C:\\xampp\\tmp\\phpBDA8.tmp): Failed to open stream: No such file or directory', 'C:\\xampp\\htdocs\\vietlethanh\\system\\Files\\File.php', 136)
+ 2 SYSTEMPATH\Files\File.php(136): finfo_file(Object(finfo), 'C:\\xampp\\tmp\\phpBDA8.tmp')
+ 3 APPPATH\Controllers\Admin\Document.php(179): CodeIgniter\Files\File->getMimeType()
+ 4 APPPATH\Controllers\Admin\Document.php(64): App\Controllers\Admin\Document->uploadDocumentFile()
+ 5 SYSTEMPATH\CodeIgniter.php(974): App\Controllers\Admin\Document->store()
+ 6 SYSTEMPATH\CodeIgniter.php(520): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Document))
+ 7 SYSTEMPATH\CodeIgniter.php(363): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))

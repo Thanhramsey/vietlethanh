@@ -4,9 +4,9 @@
     <div class="cta-section text-center py-5 px-4" data-aos="fade-up">
         <div class="row justify-content-center">
             <div class="col-lg-8">
-                <h3 class="mb-3 text-white">Bạn đang tìm kiếm phòng nghỉ hoặc đối tác thi công uy tín?</h3>
-                <p class="mb-4 text-white-50">Hãy liên hệ với Việt Lệ Thanh ngay hôm nay để nhận thông tin tư vấn dịch vụ chi tiết và ưu đãi tốt nhất.</p>
-                <a href="<?= base_url('lien-he') ?>" class="btn btn-light btn-custom text-primary btn-lg rounded-pill"><i class="bi bi-telephone-outbound-fill me-2"></i> Liên Hệ Ngay</a>
+                <h3 class="mb-3 text-white"><?= esc(lang('Site.footer_cta_title')) ?></h3>
+                <p class="mb-4 text-white-50"><?= esc(lang('Site.footer_cta_desc')) ?></p>
+                <a href="<?= base_url('lien-he') ?>" class="btn btn-light btn-custom text-primary btn-lg rounded-pill"><i class="bi bi-telephone-outbound-fill me-2"></i> <?= esc(lang('Site.contact_now')) ?></a>
             </div>
         </div>
     </div>
@@ -29,7 +29,7 @@
                     <?php endif; ?>
                     <span class="h5 mb-0 text-white fw-bold">VIỆT LỆ THANH</span>
                 </div>
-                <p class="text-white-50 mb-4">CÔNG TY TNHH MỘT THÀNH VIỆT LỆ THANH - Đơn vị hoạt động đa ngành nghề tại Gia Lai, nổi bật với dịch vụ lưu trú ngắn ngày chất lượng cao, xây dựng công trình giao thông và phát triển trang trại chăn nuôi sạch.</p>
+                <p class="text-white-50 mb-4"><?= esc(lang('Site.footer_company_desc')) ?></p>
                 <div class="d-flex gap-2">
                     <a href="<?= esc(get_setting('facebook')) ?>" class="btn btn-outline-light btn-sm rounded-circle d-flex align-items-center justify-content-center" style="width: 36px; height: 36px;"><i class="bi bi-facebook"></i></a>
                     <a href="https://zalo.me/<?= esc(get_setting('zalo')) ?>" class="btn btn-outline-light btn-sm rounded-circle d-flex align-items-center justify-content-center" style="width: 36px; height: 36px;"><i class="bi bi-chat-text-fill"></i></a>
@@ -39,20 +39,20 @@
 
             <!-- Quick Links -->
             <div class="col-lg-2 col-md-6">
-                <h4>Liên Kết Nhanh</h4>
+                <h4><?= esc(lang('Site.quick_links')) ?></h4>
                 <ul class="footer-links">
-                    <li><a href="<?= base_url() ?>">Trang chủ</a></li>
-                    <li><a href="<?= base_url('gioi-thieu') ?>">Giới thiệu</a></li>
-                    <li><a href="<?= base_url('dich-vu') ?>">Dịch vụ</a></li>
-                    <li><a href="<?= base_url('thu-vien') ?>">Thư viện ảnh</a></li>
-                    <li><a href="<?= base_url('tin-tuc') ?>">Tin tức & Sự kiện</a></li>
-                    <li><a href="<?= base_url('lien-he') ?>">Liên hệ</a></li>
+                    <li><a href="<?= base_url() ?>"><?= esc(lang('Site.home')) ?></a></li>
+                    <li><a href="<?= base_url('gioi-thieu') ?>"><?= esc(lang('Site.about')) ?></a></li>
+                    <li><a href="<?= base_url('dich-vu') ?>"><?= esc(lang('Site.services')) ?></a></li>
+                    <li><a href="<?= base_url('thu-vien') ?>"><?= esc(lang('Site.gallery')) ?></a></li>
+                    <li><a href="<?= base_url('tin-tuc') ?>"><?= esc(lang('Site.news_events')) ?></a></li>
+                    <li><a href="<?= base_url('lien-he') ?>"><?= esc(lang('Site.contact')) ?></a></li>
                 </ul>
             </div>
 
             <!-- Contact Info -->
             <div class="col-lg-3 col-md-6">
-                <h4>Thông Tin Liên Hệ</h4>
+                <h4><?= esc(lang('Site.contact_info')) ?></h4>
                 <div class="footer-contact-info">
                     <p>
                         <i class="bi bi-geo-alt-fill"></i>
@@ -60,7 +60,7 @@
                     </p>
                     <p>
                         <i class="bi bi-telephone-fill"></i>
-                        <span>Hotline: <?= esc(get_setting('phone')) ?></span>
+                        <span><?= esc(lang('Site.hotline')) ?>: <?= esc(get_setting('phone')) ?></span>
                     </p>
                     <p>
                         <i class="bi bi-envelope-fill"></i>
@@ -75,7 +75,7 @@
 
             <!-- Map View -->
             <div class="col-lg-3 col-md-6">
-                <h4>Bản Đồ Chỉ Đường</h4>
+                <h4><?= esc(lang('Site.map_direction')) ?></h4>
                 <div class="footer-map-container">
                     <iframe src="<?= get_setting('map_embed') ?>" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
@@ -85,10 +85,10 @@
         <!-- Copyright -->
         <div class="row footer-bottom">
             <div class="col-md-6 text-center text-md-start">
-                <p class="mb-0">&copy; <?= date('Y') ?> CÔNG TY TNHH MTV VIỆT LỆ THANH. All rights reserved.</p>
+                <p class="mb-0">&copy; <?= date('Y') ?> CÔNG TY TNHH MTV VIỆT LỆ THANH. <?= esc(lang('Site.all_rights_reserved')) ?></p>
             </div>
             <div class="col-md-6 text-center text-md-end mt-2 mt-md-0">
-                <p class="mb-0 text-white-50">Thiết kế bởi <a href="#" class="text-white text-decoration-none fw-bold">Antigravity</a></p>
+                <p class="mb-0 text-white-50"><?= esc(lang('Site.designed_by')) ?> <a href="#" class="text-white text-decoration-none fw-bold">Antigravity</a></p>
             </div>
         </div>
     </div>

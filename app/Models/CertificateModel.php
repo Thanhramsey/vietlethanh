@@ -13,8 +13,8 @@ class CertificateModel extends Model
     protected $useSoftDeletes   = true;
     protected $protectFields    = true;
     protected $allowedFields    = [
-        'title', 'description', 'image', 'issue_date', 'organization', 
-        'pdf_attachment', 'sort_order', 'status', 'created_by', 'updated_by'
+        'category_id', 'title', 'description', 'image', 'issue_date', 'organization',
+        'pdf_attachment', 'file_attachment', 'file_mime', 'sort_order', 'status', 'created_by', 'updated_by'
     ];
 
     // Dates

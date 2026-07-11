@@ -6,7 +6,7 @@
         <div class="card border-0 shadow-sm rounded-4">
             <div class="card-header bg-white border-bottom px-4 py-3 d-flex justify-content-between align-items-center">
                 <h6 class="mb-0 fw-bold"><i class="bi bi-plus-circle me-2 text-primary"></i>Thêm Mốc Lịch Sử Mới</h6>
-                <a href="<?= base_url('admin/milestones') ?>" class="btn btn-sm btn-outline-secondary rounded-pill">
+                <a href="<?= base_url('admin/settings?tab=page-content&contentTab=timeline') ?>" class="btn btn-sm btn-outline-secondary rounded-pill">
                     <i class="bi bi-arrow-left me-1"></i>Quay lại
                 </a>
             </div>
@@ -57,7 +57,7 @@
                     </div>
 
                     <div class="mt-4 d-flex gap-2 justify-content-end">
-                        <a href="<?= base_url('admin/milestones') ?>" class="btn btn-secondary rounded-pill px-4">Hủy</a>
+                        <a href="<?= base_url('admin/settings?tab=page-content&contentTab=timeline') ?>" class="btn btn-secondary rounded-pill px-4">Hủy</a>
                         <button type="submit" class="btn btn-primary btn-custom rounded-pill px-5">
                             <i class="bi bi-save me-1"></i>Lưu mốc lịch sử
                         </button>

@@ -118,6 +118,26 @@
             }
         });
 
+        if (document.querySelector('.certificates-slider')) {
+            const certificatesSwiper = new Swiper('.certificates-slider', {
+                slidesPerView: 1,
+                spaceBetween: 18,
+                loop: true,
+                autoplay: {
+                    delay: 3200,
+                    disableOnInteraction: false,
+                },
+                breakpoints: {
+                    576: {
+                        slidesPerView: 2,
+                    },
+                    992: {
+                        slidesPerView: 3,
+                    }
+                }
+            });
+        }
+
         // Sticky header transition on scroll
         window.addEventListener('scroll', function() {
             const header = document.querySelector('.header-wrapper');
@@ -132,6 +152,70 @@
 
         // Bind Fancybox
         Fancybox.bind("[data-fancybox]", {});
+
+        // Animate counters when statistic blocks enter viewport.
+        (function () {
+            var counters = Array.prototype.slice.call(document.querySelectorAll('.stat-number[data-count]'));
+            if (!counters.length) {
+                return;
+            }
+
+            var runCounter = function (el) {
+                if (el.dataset.animated === '1') {
+                    return;
+                }
+
+                var target = parseInt(el.getAttribute('data-count') || '0', 10);
+                if (!Number.isFinite(target) || target < 0) {
+                    target = 0;
+                }
+
+                var originalText = (el.textContent || '').trim();
+                var prefixMatch = originalText.match(/^\D+/);
+                var suffixMatch = originalText.match(/\D+$/);
+                var prefix = prefixMatch ? prefixMatch[0] : '';
+                var suffix = suffixMatch ? suffixMatch[0] : '';
+                var duration = parseInt(el.getAttribute('data-duration') || '1400', 10);
+                var start = null;
+
+                var step = function (timestamp) {
+                    if (start === null) {
+                        start = timestamp;
+                    }
+                    var progress = Math.min((timestamp - start) / duration, 1);
+                    var current = Math.ceil(target * progress);
+                    el.textContent = prefix + current.toLocaleString('vi-VN') + suffix;
+
+                    if (progress < 1) {
+                        window.requestAnimationFrame(step);
+                    } else {
+                        el.dataset.animated = '1';
+                    }
+                };
+
+                window.requestAnimationFrame(step);
+            };
+
+            if ('IntersectionObserver' in window) {
+                var observer = new IntersectionObserver(function (entries, obs) {
+                    entries.forEach(function (entry) {
+                        if (!entry.isIntersecting) {
+                            return;
+                        }
+                        runCounter(entry.target);
+                        obs.unobserve(entry.target);
+                    });
+                }, { threshold: 0.35 });
+
+                counters.forEach(function (counter) {
+                    observer.observe(counter);
+                });
+            } else {
+                counters.forEach(function (counter) {
+                    runCounter(counter);
+                });
+            }
+        })();
     </script>
 
     <!-- ===== FLOATING ACTION BUTTONS ===== -->

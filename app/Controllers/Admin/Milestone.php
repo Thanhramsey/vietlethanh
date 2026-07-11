@@ -42,7 +42,7 @@ class Milestone extends AdminBaseController
             'year'        => (int) $this->request->getPost('year'),
             'title'       => $this->request->getPost('title'),
             'description' => $this->request->getPost('description'),
-            'sort_order'  => (int) $this->request->getPost('sort_order', 0),
+            'sort_order'  => (int) ($this->request->getPost('sort_order') ?? 0),
             'created_by'  => session()->get('admin_id'),
         ];
 
@@ -58,7 +58,7 @@ class Milestone extends AdminBaseController
 
         $this->milestoneModel->insert($data);
 
-        return redirect()->to(base_url('admin/milestones'))->with('success', 'Đã thêm mốc lịch sử thành công.');
+        return redirect()->to(base_url('admin/settings?tab=page-content&contentTab=timeline'))->with('success', 'Đã thêm mốc lịch sử thành công.');
     }
 
     public function edit(int $id): string
@@ -93,7 +93,7 @@ class Milestone extends AdminBaseController
             'year'        => (int) $this->request->getPost('year'),
             'title'       => $this->request->getPost('title'),
             'description' => $this->request->getPost('description'),
-            'sort_order'  => (int) $this->request->getPost('sort_order', 0),
+            'sort_order'  => (int) ($this->request->getPost('sort_order') ?? 0),
         ];
 
         // Handle image upload
@@ -112,7 +112,7 @@ class Milestone extends AdminBaseController
 
         $this->milestoneModel->update($id, $data);
 
-        return redirect()->to(base_url('admin/milestones'))->with('success', 'Đã cập nhật mốc lịch sử thành công.');
+        return redirect()->to(base_url('admin/settings?tab=page-content&contentTab=timeline'))->with('success', 'Đã cập nhật mốc lịch sử thành công.');
     }
 
     public function delete(int $id)
@@ -123,6 +123,6 @@ class Milestone extends AdminBaseController
         }
         $this->milestoneModel->delete($id);
 
-        return redirect()->to(base_url('admin/milestones'))->with('success', 'Đã xóa mốc lịch sử.');
+        return redirect()->to(base_url('admin/settings?tab=page-content&contentTab=timeline'))->with('success', 'Đã xóa mốc lịch sử.');
     }
 }
