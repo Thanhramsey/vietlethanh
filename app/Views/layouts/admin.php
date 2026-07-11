@@ -101,7 +101,7 @@
                 </li>
                 <li class="nav-item mt-4 border-top border-secondary">
                     <a class="nav-link text-danger" href="<?= base_url('admin/logout') ?>">
-                        <i class="bi bi-box-arrow-left text-danger"></i> Đăng Thoát
+                        <i class="bi bi-box-arrow-left text-danger"></i> Đăng xuất
                     </a>
                 </li>
             </ul>
@@ -119,7 +119,7 @@
                     <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2">
                         <li><a class="dropdown-item py-2" href="<?= base_url() ?>" target="_blank"><i class="bi bi-globe me-2"></i> Xem Website</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item py-2 text-danger" href="<?= base_url('admin/logout') ?>"><i class="bi bi-box-arrow-left me-2"></i> Đăng thoát</a></li>
+                        <li><a class="dropdown-item py-2 text-danger" href="<?= base_url('admin/logout') ?>"><i class="bi bi-box-arrow-left me-2"></i> Đăng xuất</a></li>
                     </ul>
                 </div>
             </header>

@@ -516,6 +516,12 @@ if (empty($valueLines)) {
     box-shadow: 0 8px 24px rgba(30,60,114,0.35);
 }
 .about-img-years .display-4 { font-size: 2.2rem; line-height: 1; }
+.about-img-years .display-4,
+.about-img-years .text-primary,
+.about-img-years .fw-semibold {
+    color: #fff !important;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
 
 /* ===== EYEBROW ===== */
 .section-eyebrow {
