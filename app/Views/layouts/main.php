@@ -195,6 +195,11 @@
             --border-color: #e9ecef;
             --text-main: <?= esc($themeColors['text']) ?>;
             --text-muted-custom: <?= esc($themeColors['muted']) ?>;
+
+            /* Dynamic border radius overrides */
+            --border-radius-sm: <?= esc(get_setting('theme_border_radius_btn', '8px')) ?>;
+            --border-radius-md: <?= esc(get_setting('theme_border_radius_block', '12px')) ?>;
+            --border-radius-lg: calc(<?= esc(get_setting('theme_border_radius_block', '12px')) ?> * 1.5);
         }
 
         [data-theme="dark"] {
@@ -210,6 +215,44 @@
             --primary-light: #111b35;
             --text-color: #f8fafc;
             --text-muted: #94a3b8;
+        }
+        /* Force override border-radius based on user configuration */
+        .btn, 
+        .btn-custom, 
+        .btn-lg, 
+        .btn-sm,
+        .btn-outline-light,
+        .btn-outline-primary,
+        .btn-light,
+        .btn-primary,
+        .form-control,
+        .form-select {
+            border-radius: var(--border-radius-sm) !important;
+        }
+
+        .card, 
+        .why-card, 
+        .service-card, 
+        .news-card, 
+        .gallery-item, 
+        .cta-section, 
+        .footer-map-container, 
+        .certificate-doc-icon-wrap,
+        .timeline-slides-container,
+        .timeline-year-btn,
+        .navbar .dropdown-menu {
+            border-radius: var(--border-radius-md) !important;
+        }
+
+        /* Override elements on the site that use raw Bootstrap rounded utilities */
+        .rounded-3 {
+            border-radius: var(--border-radius-sm) !important;
+        }
+        .rounded-4 {
+            border-radius: var(--border-radius-md) !important;
+        }
+        .rounded-5 {
+            border-radius: var(--border-radius-lg) !important;
         }
         
         /* Apply dynamic theme variables globally */

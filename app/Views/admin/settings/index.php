@@ -27,92 +27,157 @@
                 <form action="<?= base_url('admin/settings/save') ?>" method="post" enctype="multipart/form-data">
                     <?= csrf_field() ?>
                     <input type="hidden" name="settings_tab" value="general">
-                    <div class="row g-3">
-                        <div class="col-md-6">
-                            <label class="form-label fw-semibold">Tên công ty (Tiếng Việt)</label>
-                            <input type="text" class="form-control" name="company_name" value="<?= esc(get_setting('company_name')) ?>" required>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-semibold">Tên công ty (Tiếng Anh)</label>
-                            <input type="text" class="form-control" name="company_name_en" value="<?= esc(get_setting('company_name_en')) ?>">
-                        </div>
-                        <div class="col-12">
-                            <label class="form-label fw-semibold">Địa chỉ trụ sở</label>
-                            <input type="text" class="form-control" name="address" value="<?= esc(get_setting('address')) ?>" required>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-semibold">Hotline</label>
-                            <input type="text" class="form-control" name="phone" value="<?= esc(get_setting('phone')) ?>" required>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-semibold">Email nhận liên hệ</label>
-                            <input type="email" class="form-control" name="email" value="<?= esc(get_setting('email')) ?>" required>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-semibold">Giờ làm việc</label>
-                            <input type="text" class="form-control" name="working_hours" value="<?= esc(get_setting('working_hours')) ?>">
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-semibold">Preset Font FE</label>
-                            <select class="form-select" name="theme_font_preset">
-                                <?php $fontPreset = get_setting('theme_font_preset', 'inter_outfit'); ?>
-                                <option value="inter_outfit" <?= $fontPreset === 'inter_outfit' ? 'selected' : '' ?>>Inter + Outfit (Hiện đại, cân bằng)</option>
-                                <option value="manrope_plusjakarta" <?= $fontPreset === 'manrope_plusjakarta' ? 'selected' : '' ?>>Manrope + Plus Jakarta Sans (Sắc nét, cao cấp)</option>
-                                <option value="nunito_poppins" <?= $fontPreset === 'nunito_poppins' ? 'selected' : '' ?>>Nunito + Poppins (Mềm mại, thân thiện)</option>
-                                <option value="montserrat_lato" <?= $fontPreset === 'montserrat_lato' ? 'selected' : '' ?>>Montserrat + Lato (Doanh nghiệp, rõ ràng)</option>
-                                <option value="spacemono_dmsans" <?= $fontPreset === 'spacemono_dmsans' ? 'selected' : '' ?>>Space Grotesk + DM Sans (Tech, hiện đại)</option>
-                                <option value="playfair_sourcesans" <?= $fontPreset === 'playfair_sourcesans' ? 'selected' : '' ?>>Playfair Display + Source Sans 3 (Thanh lịch)</option>
-                                <option value="merriweather_worksans" <?= $fontPreset === 'merriweather_worksans' ? 'selected' : '' ?>>Merriweather + Work Sans (Biên tập, dễ đọc)</option>
-                                <option value="raleway_urbanist" <?= $fontPreset === 'raleway_urbanist' ? 'selected' : '' ?>>Raleway + Urbanist (Trẻ trung, linh hoạt)</option>
-                                <option value="oswald_mulish" <?= $fontPreset === 'oswald_mulish' ? 'selected' : '' ?>>Oswald + Mulish (Mạnh mẽ, nổi bật)</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-semibold">Preset Màu Chủ Đạo FE</label>
-                            <select class="form-select" name="theme_color_preset">
-                                <?php $colorPreset = get_setting('theme_color_preset', 'ocean_blue'); ?>
-                                <option value="ocean_blue" <?= $colorPreset === 'ocean_blue' ? 'selected' : '' ?>>Ocean Blue (#0b5ed7)</option>
-                                <option value="emerald" <?= $colorPreset === 'emerald' ? 'selected' : '' ?>>Emerald (#0f766e)</option>
-                                <option value="sunset_orange" <?= $colorPreset === 'sunset_orange' ? 'selected' : '' ?>>Sunset Orange (#ea580c)</option>
-                                <option value="ruby_red" <?= $colorPreset === 'ruby_red' ? 'selected' : '' ?>>Ruby Red (#c81e3a)</option>
-                                <option value="indigo_night" <?= $colorPreset === 'indigo_night' ? 'selected' : '' ?>>Indigo Night (#4338ca)</option>
-                                <option value="teal_cyan" <?= $colorPreset === 'teal_cyan' ? 'selected' : '' ?>>Teal Cyan (#0f766e)</option>
-                                <option value="royal_purple" <?= $colorPreset === 'royal_purple' ? 'selected' : '' ?>>Royal Purple (#6d28d9)</option>
-                                <option value="rose_pink" <?= $colorPreset === 'rose_pink' ? 'selected' : '' ?>>Rose Pink (#e11d48)</option>
-                                <option value="forest_green" <?= $colorPreset === 'forest_green' ? 'selected' : '' ?>>Forest Green (#166534)</option>
-                            </select>
-                            <small class="text-muted">Hệ thống tự chọn màu chữ tương thích theo preset.</small>
-                        </div>
-                        <div class="col-12">
-                            <div class="border rounded-4 p-3 bg-light" id="theme-preview-box">
-                                <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-3">
-                                    <h6 class="mb-0 fw-bold">Xem trước giao diện</h6>
-                                    <div class="d-flex align-items-center gap-2">
-                                        <span class="badge rounded-pill" id="preview-primary" style="background:#0b5ed7;">Primary</span>
-                                        <span class="badge rounded-pill" id="preview-dark" style="background:#0a369d;">Dark</span>
-                                        <span class="badge rounded-pill text-dark" id="preview-light" style="background:#eef2ff;">Light</span>
-                                    </div>
+                    <div class="row g-4">
+                        <!-- Card 1: Thông tin cơ bản -->
+                        <div class="col-lg-6">
+                            <div class="card border border-light-subtle rounded-4 h-100 shadow-sm bg-white">
+                                <div class="card-header bg-light border-bottom px-4 py-3 rounded-top-4">
+                                    <h6 class="mb-0 fw-bold text-dark"><i class="bi bi-building me-2 text-primary"></i>Thông tin cơ bản</h6>
                                 </div>
-                                <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
-                                    <div class="p-3 text-white" id="preview-hero" style="background:linear-gradient(135deg,#0a369d,#0b5ed7);">
-                                        <small class="opacity-75 d-block">MẪU HEADER</small>
-                                        <h5 class="mb-0" id="preview-heading" style="font-family:'Outfit',sans-serif;">Tiêu đề Website</h5>
-                                    </div>
-                                    <div class="p-3 bg-white">
-                                        <p class="mb-2" id="preview-body" style="font-family:'Inter',sans-serif;">Đây là đoạn mô tả mẫu để xem mức độ dễ đọc với font và màu đang chọn.</p>
-                                        <button type="button" class="btn btn-sm text-white" id="preview-btn" style="background:#0b5ed7;">Nút hành động</button>
+                                <div class="card-body p-4">
+                                    <div class="row g-3">
+                                        <div class="col-12">
+                                            <label class="form-label fw-semibold">Tên công ty (Tiếng Việt)</label>
+                                            <input type="text" class="form-control rounded-3" name="company_name" value="<?= esc(get_setting('company_name')) ?>" required>
+                                        </div>
+                                        <div class="col-12">
+                                            <label class="form-label fw-semibold">Tên công ty (Tiếng Anh)</label>
+                                            <input type="text" class="form-control rounded-3" name="company_name_en" value="<?= esc(get_setting('company_name_en')) ?>">
+                                        </div>
+                                        <div class="col-12">
+                                            <label class="form-label fw-semibold">Giờ làm việc</label>
+                                            <input type="text" class="form-control rounded-3" name="working_hours" value="<?= esc(get_setting('working_hours')) ?>">
+                                        </div>
+                                        <div class="col-12">
+                                            <label class="form-label fw-semibold">Logo đơn vị</label>
+                                            <?php if (get_setting('site_logo')): ?>
+                                                <div class="mb-2 p-2 border rounded-3 bg-light d-inline-block">
+                                                    <img src="<?= base_url('uploads/settings/' . get_setting('site_logo')) ?>" alt="Site Logo" style="max-height: 50px;">
+                                                </div>
+                                            <?php endif; ?>
+                                            <input type="file" class="form-control rounded-3" name="site_logo" accept="image/*">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-semibold">Logo đơn vị</label>
-                            <?php if (get_setting('site_logo')): ?>
-                                <div class="mb-2 p-2 border rounded bg-light d-inline-block">
-                                    <img src="<?= base_url('uploads/settings/' . get_setting('site_logo')) ?>" alt="Site Logo" style="max-height: 50px;">
+
+                        <!-- Card 2: Thông tin liên hệ -->
+                        <div class="col-lg-6">
+                            <div class="card border border-light-subtle rounded-4 h-100 shadow-sm bg-white">
+                                <div class="card-header bg-light border-bottom px-4 py-3 rounded-top-4">
+                                    <h6 class="mb-0 fw-bold text-dark"><i class="bi bi-telephone me-2 text-primary"></i>Thông tin liên hệ</h6>
                                 </div>
-                            <?php endif; ?>
-                            <input type="file" class="form-control" name="site_logo" accept="image/*">
+                                <div class="card-body p-4">
+                                    <div class="row g-3">
+                                        <div class="col-12">
+                                            <label class="form-label fw-semibold">Địa chỉ trụ sở</label>
+                                            <input type="text" class="form-control rounded-3" name="address" value="<?= esc(get_setting('address')) ?>" required>
+                                        </div>
+                                        <div class="col-12">
+                                            <label class="form-label fw-semibold">Hotline</label>
+                                            <input type="text" class="form-control rounded-3" name="phone" value="<?= esc(get_setting('phone')) ?>" required>
+                                        </div>
+                                        <div class="col-12">
+                                            <label class="form-label fw-semibold">Email nhận liên hệ</label>
+                                            <input type="email" class="form-control rounded-3" name="email" value="<?= esc(get_setting('email')) ?>" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 3: Cấu hình giao diện & Phong cách -->
+                        <div class="col-12">
+                            <div class="card border border-light-subtle rounded-4 shadow-sm bg-white">
+                                <div class="card-header bg-light border-bottom px-4 py-3 rounded-top-4">
+                                    <h6 class="mb-0 fw-bold text-dark"><i class="bi bi-palette me-2 text-primary"></i>Cấu hình giao diện & Phong cách</h6>
+                                </div>
+                                <div class="card-body p-4">
+                                    <div class="row g-3">
+                                        <div class="col-md-6 col-lg-3">
+                                            <label class="form-label fw-semibold">Preset Font FE</label>
+                                            <select class="form-select rounded-3" name="theme_font_preset">
+                                                <?php $fontPreset = get_setting('theme_font_preset', 'inter_outfit'); ?>
+                                                <option value="inter_outfit" <?= $fontPreset === 'inter_outfit' ? 'selected' : '' ?>>Inter + Outfit (Hiện đại, cân bằng)</option>
+                                                <option value="manrope_plusjakarta" <?= $fontPreset === 'manrope_plusjakarta' ? 'selected' : '' ?>>Manrope + Plus Jakarta (Sắc nét)</option>
+                                                <option value="nunito_poppins" <?= $fontPreset === 'nunito_poppins' ? 'selected' : '' ?>>Nunito + Poppins (Mềm mại)</option>
+                                                <option value="montserrat_lato" <?= $fontPreset === 'montserrat_lato' ? 'selected' : '' ?>>Montserrat + Lato (Doanh nghiệp)</option>
+                                                <option value="spacemono_dmsans" <?= $fontPreset === 'spacemono_dmsans' ? 'selected' : '' ?>>Space Grotesk + DM Sans (Tech)</option>
+                                                <option value="playfair_sourcesans" <?= $fontPreset === 'playfair_sourcesans' ? 'selected' : '' ?>>Playfair + Source Sans 3 (Thanh lịch)</option>
+                                                <option value="merriweather_worksans" <?= $fontPreset === 'merriweather_worksans' ? 'selected' : '' ?>>Merriweather + Work Sans (Dễ đọc)</option>
+                                                <option value="raleway_urbanist" <?= $fontPreset === 'raleway_urbanist' ? 'selected' : '' ?>>Raleway + Urbanist (Trẻ trung)</option>
+                                                <option value="oswald_mulish" <?= $fontPreset === 'oswald_mulish' ? 'selected' : '' ?>>Oswald + Mulish (Mạnh mẽ)</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6 col-lg-3">
+                                            <label class="form-label fw-semibold">Preset Màu Chủ Đạo FE</label>
+                                            <select class="form-select rounded-3" name="theme_color_preset">
+                                                <?php $colorPreset = get_setting('theme_color_preset', 'ocean_blue'); ?>
+                                                <option value="ocean_blue" <?= $colorPreset === 'ocean_blue' ? 'selected' : '' ?>>Ocean Blue (#0b5ed7)</option>
+                                                <option value="emerald" <?= $colorPreset === 'emerald' ? 'selected' : '' ?>>Emerald (#0f766e)</option>
+                                                <option value="sunset_orange" <?= $colorPreset === 'sunset_orange' ? 'selected' : '' ?>>Sunset Orange (#ea580c)</option>
+                                                <option value="ruby_red" <?= $colorPreset === 'ruby_red' ? 'selected' : '' ?>>Ruby Red (#c81e3a)</option>
+                                                <option value="indigo_night" <?= $colorPreset === 'indigo_night' ? 'selected' : '' ?>>Indigo Night (#4338ca)</option>
+                                                <option value="teal_cyan" <?= $colorPreset === 'teal_cyan' ? 'selected' : '' ?>>Teal Cyan (#0f766e)</option>
+                                                <option value="royal_purple" <?= $colorPreset === 'royal_purple' ? 'selected' : '' ?>>Royal Purple (#6d28d9)</option>
+                                                <option value="rose_pink" <?= $colorPreset === 'rose_pink' ? 'selected' : '' ?>>Rose Pink (#e11d48)</option>
+                                                <option value="forest_green" <?= $colorPreset === 'forest_green' ? 'selected' : '' ?>>Forest Green (#166534)</option>
+                                            </select>
+                                            <small class="text-muted d-block mt-1">Tự động chọn màu chữ tương thích.</small>
+                                        </div>
+                                        
+                                        <!-- Cấu hình độ bo góc mới -->
+                                        <div class="col-md-6 col-lg-3">
+                                            <label class="form-label fw-semibold">Độ bo góc nút (Buttons)</label>
+                                            <select class="form-select rounded-3" name="theme_border_radius_btn">
+                                                <?php $btnRadius = get_setting('theme_border_radius_btn', '8px'); ?>
+                                                <option value="0px" <?= $btnRadius === '0px' ? 'selected' : '' ?>>Vuông vức (0px)</option>
+                                                <option value="4px" <?= $btnRadius === '4px' ? 'selected' : '' ?>>Bo góc nhẹ (4px)</option>
+                                                <option value="8px" <?= $btnRadius === '8px' ? 'selected' : '' ?>>Bo góc vừa (8px - Mặc định)</option>
+                                                <option value="12px" <?= $btnRadius === '12px' ? 'selected' : '' ?>>Bo góc nhiều (12px)</option>
+                                                <option value="20px" <?= $btnRadius === '20px' ? 'selected' : '' ?>>Bo góc tròn (20px)</option>
+                                                <option value="50px" <?= $btnRadius === '50px' ? 'selected' : '' ?>>Tròn hoàn toàn (Pill - 50px)</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6 col-lg-3">
+                                            <label class="form-label fw-semibold">Độ bo góc khối (Blocks/Cards)</label>
+                                            <select class="form-select rounded-3" name="theme_border_radius_block">
+                                                <?php $blockRadius = get_setting('theme_border_radius_block', '12px'); ?>
+                                                <option value="0px" <?= $blockRadius === '0px' ? 'selected' : '' ?>>Vuông vức (0px)</option>
+                                                <option value="4px" <?= $blockRadius === '4px' ? 'selected' : '' ?>>Bo góc nhẹ (4px)</option>
+                                                <option value="8px" <?= $blockRadius === '8px' ? 'selected' : '' ?>>Bo góc vừa (8px)</option>
+                                                <option value="12px" <?= $blockRadius === '12px' ? 'selected' : '' ?>>Bo góc nhiều (12px - Mặc định)</option>
+                                                <option value="16px" <?= $blockRadius === '16px' ? 'selected' : '' ?>>Bo góc lớn (16px)</option>
+                                                <option value="24px" <?= $blockRadius === '24px' ? 'selected' : '' ?>>Bo góc cực lớn (24px)</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col-12 mt-4">
+                                            <div class="border rounded-4 p-3 bg-light" id="theme-preview-box">
+                                                <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-3">
+                                                    <h6 class="mb-0 fw-bold">Xem trước giao diện</h6>
+                                                    <div class="d-flex align-items-center gap-2">
+                                                        <span class="badge rounded-pill" id="preview-primary" style="background:#0b5ed7;">Primary</span>
+                                                        <span class="badge rounded-pill" id="preview-dark" style="background:#0a369d;">Dark</span>
+                                                        <span class="badge rounded-pill text-dark" id="preview-light" style="background:#eef2ff;">Light</span>
+                                                    </div>
+                                                </div>
+                                                <div class="card border-0 shadow-sm rounded-4 overflow-hidden" id="preview-card">
+                                                    <div class="p-3 text-white" id="preview-hero" style="background:linear-gradient(135deg,#0a369d,#0b5ed7);">
+                                                        <small class="opacity-75 d-block">MẪU HEADER</small>
+                                                        <h5 class="mb-0" id="preview-heading" style="font-family:'Outfit',sans-serif;">Tiêu đề Website</h5>
+                                                    </div>
+                                                    <div class="p-3 bg-white">
+                                                        <p class="mb-2 text-dark" id="preview-body" style="font-family:'Inter',sans-serif;">Đây là đoạn mô tả mẫu để xem mức độ dễ đọc với font và màu đang chọn.</p>
+                                                        <button type="button" class="btn btn-sm text-white" id="preview-btn" style="background:#0b5ed7;">Nút hành động</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="mt-4 border-top pt-3 text-end">
@@ -838,6 +903,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const fontSelect = document.querySelector('select[name="theme_font_preset"]');
     const colorSelect = document.querySelector('select[name="theme_color_preset"]');
+    const btnRadiusSelect = document.querySelector('select[name="theme_border_radius_btn"]');
+    const blockRadiusSelect = document.querySelector('select[name="theme_border_radius_block"]');
 
     const previewHeading = document.getElementById('preview-heading');
     const previewBody = document.getElementById('preview-body');
@@ -846,6 +913,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const previewPrimary = document.getElementById('preview-primary');
     const previewDark = document.getElementById('preview-dark');
     const previewLight = document.getElementById('preview-light');
+    const previewCard = document.getElementById('preview-card');
 
     const fontMap = {
         inter_outfit: { heading: "'Outfit', 'Inter', sans-serif", body: "'Inter', sans-serif" },
@@ -886,6 +954,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
         previewHero.style.background = 'linear-gradient(135deg,' + selectedColor.dark + ',' + selectedColor.primary + ')';
         previewBtn.style.background = selectedColor.primary;
+
+        // Cập nhật độ bo góc real-time trong admin preview
+        if (btnRadiusSelect && previewBtn) {
+            previewBtn.style.borderRadius = btnRadiusSelect.value;
+        }
+        if (blockRadiusSelect && previewCard) {
+            previewCard.style.borderRadius = blockRadiusSelect.value;
+        }
     }
 
     if (fontSelect) {
@@ -893,6 +969,12 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     if (colorSelect) {
         colorSelect.addEventListener('change', applyThemePreview);
+    }
+    if (btnRadiusSelect) {
+        btnRadiusSelect.addEventListener('change', applyThemePreview);
+    }
+    if (blockRadiusSelect) {
+        blockRadiusSelect.addEventListener('change', applyThemePreview);
     }
     applyThemePreview();
 });

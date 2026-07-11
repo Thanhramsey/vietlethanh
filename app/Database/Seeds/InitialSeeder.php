@@ -38,6 +38,8 @@ class InitialSeeder extends Seeder
             ['key' => 'facebook', 'value' => 'https://facebook.com/vietlethanh.gialai'],
             ['key' => 'zalo', 'value' => '0914168379'],
             ['key' => 'working_hours', 'value' => 'Mở cửa 24/7 (Đối với lưu trú)'],
+            ['key' => 'theme_border_radius_btn', 'value' => '8px'],
+            ['key' => 'theme_border_radius_block', 'value' => '12px'],
         ];
 
         foreach ($settings as $setting) {
