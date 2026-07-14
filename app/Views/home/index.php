@@ -262,13 +262,31 @@ $extractYouTubeId = static function (string $url): ?string {
         <div class="row g-4">
             <?php if (!empty($services)): ?>
                 <?php foreach ($services as $service): ?>
+                    <?php
+                    $homeServiceImageRaw = (string) ($service['image'] ?? '');
+                    $homeServiceImagePath = '';
+                    $homeServiceImageUrl = '';
+                    if ($homeServiceImageRaw !== '') {
+                        if (strpos($homeServiceImageRaw, 'uploads/') === 0) {
+                            $homeServiceImagePath = FCPATH . $homeServiceImageRaw;
+                            $homeServiceImageUrl = base_url($homeServiceImageRaw);
+                        } else {
+                            $homeServiceImagePath = FCPATH . 'uploads/services/' . $homeServiceImageRaw;
+                            $homeServiceImageUrl = base_url('uploads/services/' . $homeServiceImageRaw);
+                        }
+                    }
+                    $homeServiceHasImage = !empty($homeServiceImagePath) && file_exists($homeServiceImagePath);
+                    ?>
                     <div class="col-lg-4 col-md-6" data-aos="fade-up">
                         <div class="service-card">
                             <div class="service-img-wrapper">
-                                <!-- Placeholders for demo, using stylized divs if file missing -->
-                                <div class="w-100 h-100 bg-primary d-flex align-items-center justify-content-center text-white" style="background: linear-gradient(135deg, rgba(var(--primary-rgb),0.85), rgba(var(--primary-dark-rgb),0.92));">
-                                    <i class="bi <?= esc($service['icon']) ?> fs-1"></i>
-                                </div>
+                                <?php if ($homeServiceHasImage): ?>
+                                    <img src="<?= $homeServiceImageUrl ?>" alt="<?= esc($service['title']) ?>" style="width:100%;height:100%;object-fit:cover;">
+                                <?php else: ?>
+                                    <div class="w-100 h-100 bg-primary d-flex align-items-center justify-content-center text-white" style="background: linear-gradient(135deg, rgba(var(--primary-rgb),0.85), rgba(var(--primary-dark-rgb),0.92));">
+                                        <i class="bi <?= esc($service['icon']) ?> fs-1"></i>
+                                    </div>
+                                <?php endif; ?>
                                 <div class="service-icon-badge">
                                     <i class="bi <?= esc($service['icon']) ?>"></i>
                                 </div>

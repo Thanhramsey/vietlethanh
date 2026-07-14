@@ -19,16 +19,37 @@
 <!-- Service Detail Section -->
 <section class="section-padding">
     <div class="container">
+        <?php
+        $serviceDetailImageRaw = (string) ($service['image'] ?? '');
+        $serviceDetailImagePath = '';
+        $serviceDetailImageUrl = '';
+        if ($serviceDetailImageRaw !== '') {
+            if (strpos($serviceDetailImageRaw, 'uploads/') === 0) {
+                $serviceDetailImagePath = FCPATH . $serviceDetailImageRaw;
+                $serviceDetailImageUrl = base_url($serviceDetailImageRaw);
+            } else {
+                $serviceDetailImagePath = FCPATH . 'uploads/services/' . $serviceDetailImageRaw;
+                $serviceDetailImageUrl = base_url('uploads/services/' . $serviceDetailImageRaw);
+            }
+        }
+        $serviceDetailHasImage = !empty($serviceDetailImagePath) && file_exists($serviceDetailImagePath);
+        ?>
         <div class="row g-5">
             <!-- Left content column -->
             <div class="col-lg-8" data-aos="fade-right">
                 <div class="service-detail-content">
-                    <div class="mb-4 bg-primary text-white d-flex align-items-center justify-content-center rounded-4 shadow-sm" style="height: 350px; background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 100%);">
-                        <div class="text-center p-4">
-                            <i class="bi <?= esc($service['icon']) ?> display-1 mb-3"></i>
-                            <h2 class="fw-bold"><?= esc($service['title']) ?></h2>
+                    <?php if ($serviceDetailHasImage): ?>
+                        <div class="mb-4 rounded-4 shadow-sm overflow-hidden" style="height: 350px;">
+                            <img src="<?= $serviceDetailImageUrl ?>" alt="<?= esc($service['title']) ?>" style="width:100%;height:100%;object-fit:cover;">
                         </div>
-                    </div>
+                    <?php else: ?>
+                        <div class="mb-4 bg-primary text-white d-flex align-items-center justify-content-center rounded-4 shadow-sm" style="height: 350px; background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 100%);">
+                            <div class="text-center p-4">
+                                <i class="bi <?= esc($service['icon']) ?> display-1 mb-3"></i>
+                                <h2 class="fw-bold"><?= esc($service['title']) ?></h2>
+                            </div>
+                        </div>
+                    <?php endif; ?>
                     
                     <h2 class="mb-3 text-primary-color"><?= esc($service['title']) ?></h2>
                     

@@ -21,13 +21,31 @@
         <div class="row g-4">
             <?php if (!empty($services)): ?>
                 <?php foreach ($services as $service): ?>
+                    <?php
+                    $serviceListImageRaw = (string) ($service['image'] ?? '');
+                    $serviceListImagePath = '';
+                    $serviceListImageUrl = '';
+                    if ($serviceListImageRaw !== '') {
+                        if (strpos($serviceListImageRaw, 'uploads/') === 0) {
+                            $serviceListImagePath = FCPATH . $serviceListImageRaw;
+                            $serviceListImageUrl = base_url($serviceListImageRaw);
+                        } else {
+                            $serviceListImagePath = FCPATH . 'uploads/services/' . $serviceListImageRaw;
+                            $serviceListImageUrl = base_url('uploads/services/' . $serviceListImageRaw);
+                        }
+                    }
+                    $serviceListHasImage = !empty($serviceListImagePath) && file_exists($serviceListImagePath);
+                    ?>
                     <div class="col-lg-4 col-md-6" data-aos="fade-up">
                         <div class="service-card">
                             <div class="service-img-wrapper">
-                                <!-- Mock image display using styled div -->
-                                <div class="w-100 h-100 bg-primary d-flex align-items-center justify-content-center text-white" style="background: linear-gradient(135deg, rgba(var(--primary-rgb),0.85), rgba(var(--primary-dark-rgb),0.92));">
-                                    <i class="bi <?= esc($service['icon']) ?> fs-1"></i>
-                                </div>
+                                <?php if ($serviceListHasImage): ?>
+                                    <img src="<?= $serviceListImageUrl ?>" alt="<?= esc($service['title']) ?>" style="width:100%;height:100%;object-fit:cover;">
+                                <?php else: ?>
+                                    <div class="w-100 h-100 bg-primary d-flex align-items-center justify-content-center text-white" style="background: linear-gradient(135deg, rgba(var(--primary-rgb),0.85), rgba(var(--primary-dark-rgb),0.92));">
+                                        <i class="bi <?= esc($service['icon']) ?> fs-1"></i>
+                                    </div>
+                                <?php endif; ?>
                                 <div class="service-icon-badge">
                                     <i class="bi <?= esc($service['icon']) ?>"></i>
                                 </div>
