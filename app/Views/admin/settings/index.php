@@ -98,7 +98,8 @@
                                         <div class="col-md-6 col-lg-3">
                                             <label class="form-label fw-semibold">Preset Font FE</label>
                                             <select class="form-select rounded-3" name="theme_font_preset">
-                                                <?php $fontPreset = get_setting('theme_font_preset', 'inter_outfit'); ?>
+                                                <?php $fontPreset = get_setting('theme_font_preset', 'helvetica'); ?>
+                                                <option value="helvetica" <?= $fontPreset === 'helvetica' ? 'selected' : '' ?>>Helvetica (Huong Viet Sinh style)</option>
                                                 <option value="inter_outfit" <?= $fontPreset === 'inter_outfit' ? 'selected' : '' ?>>Inter + Outfit (Hiện đại, cân bằng)</option>
                                                 <option value="manrope_plusjakarta" <?= $fontPreset === 'manrope_plusjakarta' ? 'selected' : '' ?>>Manrope + Plus Jakarta (Sắc nét)</option>
                                                 <option value="nunito_poppins" <?= $fontPreset === 'nunito_poppins' ? 'selected' : '' ?>>Nunito + Poppins (Mềm mại)</option>
@@ -113,7 +114,8 @@
                                         <div class="col-md-6 col-lg-3">
                                             <label class="form-label fw-semibold">Preset Màu Chủ Đạo FE</label>
                                             <select class="form-select rounded-3" name="theme_color_preset">
-                                                <?php $colorPreset = get_setting('theme_color_preset', 'ocean_blue'); ?>
+                                                <?php $colorPreset = get_setting('theme_color_preset', 'huongvietsinh'); ?>
+                                                <option value="huongvietsinh" <?= $colorPreset === 'huongvietsinh' ? 'selected' : '' ?>>Hương Việt Sinh Red/Gold (#e41e26)</option>
                                                 <option value="ocean_blue" <?= $colorPreset === 'ocean_blue' ? 'selected' : '' ?>>Ocean Blue (#0b5ed7)</option>
                                                 <option value="emerald" <?= $colorPreset === 'emerald' ? 'selected' : '' ?>>Emerald (#0f766e)</option>
                                                 <option value="sunset_orange" <?= $colorPreset === 'sunset_orange' ? 'selected' : '' ?>>Sunset Orange (#ea580c)</option>

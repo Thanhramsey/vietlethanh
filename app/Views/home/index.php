@@ -133,13 +133,6 @@ $extractYouTubeId = static function (string $url): ?string {
     <div class="swiper-pagination"></div>
     <div class="swiper-button-next d-none d-md-flex"></div>
     <div class="swiper-button-prev d-none d-md-flex"></div>
-
-    <!-- Bottom wave divider -->
-    <div class="hero-wave-divider">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 60" preserveAspectRatio="none">
-            <path fill="#ffffff" fill-opacity="1" d="M0,40L60,34C120,28,240,16,360,18C480,20,600,36,720,40C840,44,960,36,1080,30C1200,24,1320,20,1380,18L1440,16L1440,60L1380,60C1320,60,1200,60,1080,60C960,60,840,60,720,60C600,60,480,60,360,60C240,60,120,60,60,60L0,60Z"></path>
-        </svg>
-    </div>
 </section>
 
 <!-- Company Introduction Section -->
@@ -152,43 +145,51 @@ $extractYouTubeId = static function (string $url): ?string {
         <div class="row align-items-center g-5">
             <div class="col-lg-6" data-aos="fade-right">
                 <div class="position-relative">
-                    <div class="bg-primary rounded-3 position-absolute" style="top: -15px; left: -15px; width: 100%; height: 100%; z-index: -1; opacity: 0.1;"></div>
-                    <!-- Mock introduction image (we will use a premium colored div/gradient or placeholder) -->
-                    <div class="rounded-3 shadow-md bg-secondary text-white d-flex align-items-center justify-content-center" style="height: 400px; background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 100%);">
-                        <div class="text-center p-4">
-                            <i class="bi bi-building fs-1 mb-3"></i>
-                            <h3><?= esc($homeIntroCardTitle) ?></h3>
-                            <p class="mb-0"><?= esc($homeIntroCardAddress) ?></p>
+                    <div class="bg-primary position-absolute" style="top: -12px; left: -12px; width: 100%; height: 100%; z-index: -1; opacity: 0.08; border-radius: 8px;"></div>
+                    <!-- Play Video / Introduction Image card mimicking huongvietsinh -->
+                    <div class="shadow-sm position-relative overflow-hidden" style="height: 400px; border-radius: 8px;">
+                        <div class="w-100 h-100 d-flex align-items-center justify-content-center text-white text-center" style="background: linear-gradient(135deg, rgba(var(--primary-dark-rgb), 0.85) 0%, rgba(var(--primary-rgb), 0.75) 100%), url('<?= base_url('uploads/settings/' . get_setting('site_logo')) ?>') center/cover no-repeat;">
+                            <div class="p-4" style="z-index: 2;">
+                                <div class="play-btn-wrapper mb-3 d-inline-flex align-items-center justify-content-center rounded-circle bg-white text-primary" style="width: 72px; height: 72px; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.15); transition: transform 0.3s ease;" onclick="alert('Xem video giới thiệu dịch vụ Việt Lệ Thanh')">
+                                    <i class="bi bi-play-fill fs-1" style="margin-left: 4px; color: var(--primary-color);"></i>
+                                </div>
+                                <h4 class="fw-bold mb-1"><?= esc($homeIntroCardTitle) ?></h4>
+                                <p class="mb-0 text-white-50" style="font-size: 0.85rem;"><?= esc($homeIntroCardAddress) ?></p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-6" data-aos="fade-left">
-                <span class="text-primary fw-bold text-uppercase d-block mb-2"><?= esc($homeIntroEyebrow) ?></span>
-                <h2 class="section-title-left mb-4"><?= esc($homeIntroHeading) ?></h2>
-                <p><?= esc($homeIntroBody1) ?></p>
-                <p><?= esc($homeIntroBody2) ?></p>
+                <span class="text-primary fw-bold text-uppercase d-block mb-2" style="letter-spacing: 1px; font-size: 0.85rem;"><?= esc($homeIntroEyebrow) ?></span>
+                <h2 class="section-title-left mb-4" style="font-size: 1.8rem;"><?= esc($homeIntroHeading) ?></h2>
+                <p class="text-muted" style="font-size: 0.95rem; line-height: 1.7;"><?= esc($homeIntroBody1) ?></p>
+                <p class="text-muted" style="font-size: 0.95rem; line-height: 1.7;"><?= esc($homeIntroBody2) ?></p>
                 <div class="row g-4 mt-2">
                     <div class="col-sm-6">
                         <div class="d-flex align-items-center">
-                            <i class="bi bi-patch-check-fill text-primary fs-3 me-3"></i>
+                            <div class="bg-light rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 44px; height: 44px; min-width: 44px; border: 1.5px solid var(--primary-color);">
+                                <i class="bi bi-check-lg text-primary fs-4" style="color: var(--primary-color) !important;"></i>
+                            </div>
                             <div>
-                                <h5 class="mb-0 fw-bold"><?= esc($homeIntroFeature1Title) ?></h5>
-                                <small class="text-muted"><?= esc($homeIntroFeature1Sub) ?></small>
+                                <h6 class="mb-0 fw-bold text-dark" style="font-size: 0.95rem;"><?= esc($homeIntroFeature1Title) ?></h6>
+                                <small class="text-muted" style="font-size: 0.8rem;"><?= esc($homeIntroFeature1Sub) ?></small>
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="d-flex align-items-center">
-                            <i class="bi bi-shield-fill-check text-primary fs-3 me-3"></i>
+                            <div class="bg-light rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 44px; height: 44px; min-width: 44px; border: 1.5px solid var(--accent-color);">
+                                <i class="bi bi-shield-check text-warning fs-4" style="color: var(--accent-color) !important;"></i>
+                            </div>
                             <div>
-                                <h5 class="mb-0 fw-bold"><?= esc($homeIntroFeature2Title) ?></h5>
-                                <small class="text-muted"><?= esc($homeIntroFeature2Sub) ?></small>
+                                <h6 class="mb-0 fw-bold text-dark" style="font-size: 0.95rem;"><?= esc($homeIntroFeature2Title) ?></h6>
+                                <small class="text-muted" style="font-size: 0.8rem;"><?= esc($homeIntroFeature2Sub) ?></small>
                             </div>
                         </div>
                     </div>
                 </div>
-                <a href="<?= base_url(ltrim($homeIntroButtonLink, '/')) ?>" class="btn btn-outline-primary btn-custom rounded-pill mt-4"><?= esc($homeIntroButtonText) ?></a>
+                <a href="<?= base_url(ltrim($homeIntroButtonLink, '/')) ?>" class="btn btn-outline-primary btn-custom mt-4" style="font-size: 0.9rem; font-weight: bold; border-radius: 4px !important;"><?= esc($homeIntroButtonText) ?> <i class="bi bi-chevron-right ms-1"></i></a>
             </div>
         </div>
     </div>
@@ -293,8 +294,8 @@ $extractYouTubeId = static function (string $url): ?string {
                             </div>
                             <div class="service-info">
                                 <h3><a href="<?= base_url('dich-vu/' . esc($service['slug'])) ?>"><?= esc($service['title']) ?></a></h3>
-                                <p class="text-muted mb-4"><?= esc($service['summary']) ?></p>
-                                <a href="<?= base_url('dich-vu/' . esc($service['slug'])) ?>" class="btn btn-outline-primary btn-custom btn-sm rounded-pill">Xem thêm <i class="bi bi-arrow-right"></i></a>
+                                <p class="text-muted mb-3"><?= esc($service['summary']) ?></p>
+                                <a href="<?= base_url('dich-vu/' . esc($service['slug'])) ?>" class="text-primary text-decoration-none fw-bold small d-inline-flex align-items-center gap-1">Xem thêm <i class="bi bi-chevron-right" style="font-size:0.8rem;"></i></a>
                             </div>
                         </div>
                     </div>
@@ -404,8 +405,8 @@ $extractYouTubeId = static function (string $url): ?string {
                                     <i class="bi bi-calendar3 me-1"></i> <?= date('d/m/Y', strtotime($item['published_at'])) ?>
                                 </div>
                                 <h3 class="news-title"><a href="<?= base_url('tin-tuc/' . esc($item['slug'])) ?>"><?= esc($item['title']) ?></a></h3>
-                                <p class="text-muted small"><?= esc($item['summary']) ?></p>
-                                <a href="<?= base_url('tin-tuc/' . esc($item['slug'])) ?>" class="btn btn-link text-primary p-0 text-decoration-none fw-bold small"><?= esc($homeNewsReadMoreText) ?> <i class="bi bi-arrow-right"></i></a>
+                                <p class="text-muted small mb-2"><?= esc($item['summary']) ?></p>
+                                <a href="<?= base_url('tin-tuc/' . esc($item['slug'])) ?>" class="text-primary text-decoration-none fw-bold small d-inline-flex align-items-center gap-1"><?= esc($homeNewsReadMoreText) ?> <i class="bi bi-chevron-right" style="font-size:0.8rem;"></i></a>
                             </div>
                         </div>
                     </div>

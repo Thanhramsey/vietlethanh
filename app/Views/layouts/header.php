@@ -7,7 +7,7 @@ $langEnUrl = base_url('lang/en?redirect=' . urlencode($switchRedirect));
 $currentLangLabel = $currentLocale === 'vi' ? 'VN' : 'EN';
 $currentFlagUrl = $currentLocale === 'vi' ? 'https://flagcdn.com/w20/vn.png' : 'https://flagcdn.com/w20/gb.png';
 ?>
-<div class="bg-primary text-white py-2 d-none d-lg-block">
+<div class="text-white py-2 d-none d-lg-block" style="background-color: var(--primary-dark);">
     <div class="container">
         <div class="row align-items-center">
             <div class="col-md-8 small">
@@ -154,10 +154,11 @@ $currentFlagUrl = $currentLocale === 'vi' ? 'https://flagcdn.com/w20/vn.png' : '
                         </li>
                     </ul>
                 </div>
-                <!-- Theme Toggle Button -->
+                <!-- Theme Toggle Button Hidden for Huong Viet Sinh look
                 <button id="theme-toggle-btn" class="btn btn-outline-secondary btn-sm ms-2 me-lg-2 mb-2 mb-lg-0 d-inline-flex align-items-center justify-content-center" style="width: 32px; height: 32px; border-radius: 50%;" title="Đổi giao diện">
                     <i class="bi bi-moon-fill" id="theme-toggle-icon"></i>
                 </button>
+                -->
             </div>
         </div>
     </nav>

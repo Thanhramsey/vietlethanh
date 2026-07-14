@@ -3,6 +3,11 @@
 <head>
     <?php
     $fontPresets = [
+        'helvetica' => [
+            'google'  => 'family=Plus+Jakarta+Sans:wght@400;500;600;700;800',
+            'heading' => "Helvetica, Arial, sans-serif",
+            'body'    => "Helvetica, Arial, sans-serif",
+        ],
         'inter_outfit' => [
             'google'  => 'family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800',
             'heading' => "'Outfit', 'Inter', sans-serif",
@@ -51,6 +56,11 @@
     ];
 
     $colorPresets = [
+        'huongvietsinh' => [
+            'primary' => '#e41e26', 'dark' => '#9f212e', 'light' => '#fff1f2', 'accent' => '#f3be17',
+            'text' => '#111111', 'muted' => '#7f8c8d', 'bg_light' => '#f3f5f5',
+            'primary_rgb' => '228, 30, 38', 'dark_rgb' => '159, 33, 46',
+        ],
         'ocean_blue' => [
             'primary' => '#0b5ed7', 'dark' => '#0a369d', 'light' => '#eef2ff', 'accent' => '#f59e0b',
             'text' => '#2c3e50', 'muted' => '#6c757d', 'bg_light' => '#f8f9fa',
@@ -98,15 +108,15 @@
         ],
     ];
 
-    $fontKey = get_setting('theme_font_preset', 'inter_outfit');
+    $fontKey = get_setting('theme_font_preset', 'helvetica');
     if (!array_key_exists($fontKey, $fontPresets)) {
-        $fontKey = 'inter_outfit';
+        $fontKey = 'helvetica';
     }
     $fontPreset = $fontPresets[$fontKey];
 
-    $colorKey = get_setting('theme_color_preset', 'ocean_blue');
+    $colorKey = get_setting('theme_color_preset', 'huongvietsinh');
     if (!array_key_exists($colorKey, $colorPresets)) {
-        $colorKey = 'ocean_blue';
+        $colorKey = 'huongvietsinh';
     }
     $themeColors = $colorPresets[$colorKey];
 

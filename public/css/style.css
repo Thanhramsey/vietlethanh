@@ -1267,3 +1267,153 @@ a.text-primary:hover {
     color: #ffffff !important;
 }
 
+/* ===== HUONG VIET SINH CSS OVERRIDES ===== */
+.navbar-nav .nav-link {
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+    padding: 10px 15px !important;
+    transition: all 0.2s ease-in-out;
+}
+
+.navbar-nav .nav-link:hover, 
+.navbar-nav .nav-link.active {
+    color: var(--primary-color) !important;
+}
+
+/* Redesign Section Titles */
+.section-title::after {
+    background-color: var(--accent-color) !important;
+    width: 53px;
+    height: 4px;
+    border-radius: 0;
+}
+
+.section-title-left::after {
+    background-color: var(--accent-color) !important;
+    width: 53px;
+    height: 4px;
+    border-radius: 0;
+}
+
+/* Button & Hover transitions */
+.btn-primary, .btn-custom-primary {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    color: #ffffff !important;
+}
+
+.btn-primary:hover, .btn-custom-primary:hover {
+    background-color: var(--accent-color) !important;
+    border-color: var(--accent-color) !important;
+    color: #111111 !important;
+}
+
+.btn-outline-primary {
+    color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+    color: #ffffff !important;
+}
+
+/* Light Footer Styles to match target */
+.footer {
+    background-color: #f3f5f5 !important;
+    color: #111111 !important;
+    padding: 70px 0 20px;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.footer h4 {
+    color: var(--primary-dark) !important;
+    font-size: 1.25rem;
+    margin-bottom: 25px;
+    position: relative;
+    padding-bottom: 10px;
+    font-weight: 700;
+}
+
+.footer h4::after {
+    background-color: var(--accent-color) !important;
+    width: 40px;
+    height: 3px;
+    border-radius: 0;
+}
+
+.footer-links a {
+    color: #333333 !important;
+    transition: all 0.2s ease-in-out;
+}
+
+.footer-links a:hover {
+    color: var(--primary-color) !important;
+    padding-left: 5px;
+}
+
+.footer-contact-info p {
+    color: #111111 !important;
+}
+
+.footer-contact-info i {
+    color: var(--primary-color) !important;
+}
+
+.footer-bottom {
+    border-top: 1px solid rgba(0, 0, 0, 0.08) !important;
+}
+
+.footer-bottom p {
+    color: #555555 !important;
+}
+
+/* Clean up card roundings and borders */
+.card, .service-card, .news-card, .why-card, .gallery-item {
+    border-radius: 8px !important;
+    border: 1px solid rgba(0, 0, 0, 0.06) !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03) !important;
+}
+
+.card:hover, .service-card:hover, .news-card:hover, .why-card:hover {
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08) !important;
+}
+
+/* Float items style */
+.float-btn {
+    border-radius: 4px !important;
+}
+
+/* Custom play button animation on Intro card */
+.play-btn-wrapper {
+    transition: all 0.3s ease-in-out !important;
+}
+.play-btn-wrapper:hover {
+    transform: scale(1.1);
+    background-color: var(--accent-color) !important;
+}
+.play-btn-wrapper:hover i {
+    color: #ffffff !important;
+}
+
+/* Force body styling to match huongvietsinh typography exactly */
+body {
+    font-family: Helvetica, Arial, sans-serif !important;
+    font-size: 14px !important;
+    color: #000000 !important;
+}
+h1, h2, h3, h4, h5, h6 {
+    font-family: Helvetica, Arial, sans-serif !important;
+}
+p {
+    font-size: 14px !important;
+    line-height: 1.6 !important;
+}
+
+
+

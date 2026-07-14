@@ -27,19 +27,19 @@
                             <span class="fw-bold fs-5">VLT</span>
                         </div>
                     <?php endif; ?>
-                    <span class="h5 mb-0 text-white fw-bold">VIỆT LỆ THANH</span>
+                    <span class="h5 mb-0 text-dark fw-bold">VIỆT LỆ THANH</span>
                 </div>
-                <p class="text-white-50 mb-4"><?= esc(lang('Site.footer_company_desc')) ?></p>
+                <p class="text-muted mb-4"><?= esc(lang('Site.footer_company_desc')) ?></p>
                 <div class="d-flex gap-2">
-                    <a href="<?= esc(get_setting('facebook')) ?>" class="btn btn-outline-light btn-sm rounded-circle d-flex align-items-center justify-content-center" style="width: 36px; height: 36px;"><i class="bi bi-facebook"></i></a>
-                    <a href="https://zalo.me/<?= esc(get_setting('zalo')) ?>" class="btn btn-outline-light btn-sm rounded-circle d-flex align-items-center justify-content-center" style="width: 36px; height: 36px;"><i class="bi bi-chat-text-fill"></i></a>
-                    <a href="mailto:<?= esc(get_setting('email')) ?>" class="btn btn-outline-light btn-sm rounded-circle d-flex align-items-center justify-content-center" style="width: 36px; height: 36px;"><i class="bi bi-envelope-fill"></i></a>
+                    <a href="<?= esc(get_setting('facebook')) ?>" class="btn btn-outline-primary btn-sm rounded-circle d-flex align-items-center justify-content-center" style="width: 36px; height: 36px;"><i class="bi bi-facebook"></i></a>
+                    <a href="https://zalo.me/<?= esc(get_setting('zalo')) ?>" class="btn btn-outline-primary btn-sm rounded-circle d-flex align-items-center justify-content-center" style="width: 36px; height: 36px;"><i class="bi bi-chat-text-fill"></i></a>
+                    <a href="mailto:<?= esc(get_setting('email')) ?>" class="btn btn-outline-primary btn-sm rounded-circle d-flex align-items-center justify-content-center" style="width: 36px; height: 36px;"><i class="bi bi-envelope-fill"></i></a>
                 </div>
             </div>
 
             <!-- Quick Links -->
             <div class="col-lg-2 col-md-6">
-                <h4><?= esc(lang('Site.quick_links')) ?></h4>
+                <h4 class="text-dark"><?= esc(lang('Site.quick_links')) ?></h4>
                 <ul class="footer-links">
                     <li><a href="<?= base_url() ?>"><?= esc(lang('Site.home')) ?></a></li>
                     <li><a href="<?= base_url('gioi-thieu') ?>"><?= esc(lang('Site.about')) ?></a></li>
@@ -52,30 +52,30 @@
 
             <!-- Contact Info -->
             <div class="col-lg-3 col-md-6">
-                <h4><?= esc(lang('Site.contact_info')) ?></h4>
+                <h4 class="text-dark"><?= esc(lang('Site.contact_info')) ?></h4>
                 <div class="footer-contact-info">
                     <p>
                         <i class="bi bi-geo-alt-fill"></i>
-                        <span><?= esc(get_setting('address')) ?></span>
+                        <span class="text-dark"><?= esc(get_setting('address')) ?></span>
                     </p>
                     <p>
                         <i class="bi bi-telephone-fill"></i>
-                        <span><?= esc(lang('Site.hotline')) ?>: <?= esc(get_setting('phone')) ?></span>
+                        <span class="text-dark"><?= esc(lang('Site.hotline')) ?>: <?= esc(get_setting('phone')) ?></span>
                     </p>
                     <p>
                         <i class="bi bi-envelope-fill"></i>
-                        <span>Email: <?= esc(get_setting('email')) ?></span>
+                        <span class="text-dark">Email: <?= esc(get_setting('email')) ?></span>
                     </p>
                     <p>
                         <i class="bi bi-clock-fill"></i>
-                        <span><?= esc(get_setting('working_hours', 'Mở cửa 24/7')) ?></span>
+                        <span class="text-dark"><?= esc(get_setting('working_hours', 'Mở cửa 24/7')) ?></span>
                     </p>
                 </div>
             </div>
 
             <!-- Map View -->
             <div class="col-lg-3 col-md-6">
-                <h4><?= esc(lang('Site.map_direction')) ?></h4>
+                <h4 class="text-dark"><?= esc(lang('Site.map_direction')) ?></h4>
                 <div class="footer-map-container">
                     <iframe src="<?= get_setting('map_embed') ?>" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
@@ -83,12 +83,12 @@
         </div>
 
         <!-- Copyright -->
-        <div class="row footer-bottom">
-            <div class="col-md-6 text-center text-md-start">
+        <div class="row footer-bottom border-top pt-3 mt-4">
+            <div class="col-md-6 text-center text-md-start text-dark">
                 <p class="mb-0">&copy; <?= date('Y') ?> CÔNG TY TNHH MTV VIỆT LỆ THANH. <?= esc(lang('Site.all_rights_reserved')) ?></p>
             </div>
-            <div class="col-md-6 text-center text-md-end mt-2 mt-md-0">
-                <p class="mb-0 text-white-50"><?= esc(lang('Site.designed_by')) ?> <a href="#" class="text-white text-decoration-none fw-bold">Antigravity</a></p>
+            <div class="col-md-6 text-center text-md-end mt-2 mt-md-0 text-dark">
+                <p class="mb-0 text-muted"><?= esc(lang('Site.designed_by')) ?> <a href="#" class="text-dark text-decoration-none fw-bold">Antigravity</a></p>
             </div>
         </div>
     </div>
